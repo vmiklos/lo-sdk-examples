@@ -1,0 +1,50 @@
+/*
+ * This sample program was automatically created by the
+ * OpenOffice.org Object Inspector extension.
+ */
+
+import com.sun.star.comp.helper.Bootstrap;
+import com.sun.star.comp.helper.BootstrapException;
+import com.sun.star.lang.XSingleComponentFactory;
+import com.sun.star.uno.UnoRuntime;
+import com.sun.star.uno.XComponentContext
+import com.sun.star.text.XTextDocument;
+import com.sun.star.frame.XModel;
+%imports
+
+public class SampleProgram
+{
+
+  public static void main(String[] args)
+  {
+    XComponentContext xContext  = bootstrap();
+    XModel            xDocModel = xContext.getDocument();
+   
+    %code
+  }
+
+  private static XComponentContext bootstrap()
+  {
+    xContext = null;
+    try
+    {
+      // Get the remote office component context
+      xContext = Bootstrap.bootstrap();
+      if (xContext != null)
+      {
+        System.out.println("Connected to a running office ...");
+        return xContext;
+      }
+      else
+        throw new BootstrapException();
+    }
+    catch (BootstrapException ex)
+    {
+      ex.printStackTrace();
+      JOptionPane.showMessageDialog(null, "Could not bootstrap soffice executable!");
+      System.exit(1);
+    }
+    return null;
+  }
+
+}

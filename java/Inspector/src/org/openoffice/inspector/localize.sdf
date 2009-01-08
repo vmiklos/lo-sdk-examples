@@ -1,0 +1,156 @@
+#
+#    ####    ###     #   #   ###   #####    #####  ####   #####  #####  
+#    #   #  #   #    ##  #  #   #    #      #      #   #    #      #    
+#    #   #  #   #    # # #  #   #    #      ###    #   #    #      #    
+#    #   #  #   #    #  ##  #   #    #      #      #   #    #      #    
+#    ####    ###     #   #   ###     #      #####  ####   #####    #    
+#
+#    DO NOT EDIT! This file will be overwritten by localisation process
+#
+#*************************************************************************
+#
+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+# 
+# Copyright 2008 by Sun Microsystems, Inc.
+#
+# OpenOffice.org - a multi-platform office productivity suite
+#
+# $RCSfile: localize.sdf,v $
+#
+# $Revision: 1.6 $
+#
+# This file is part of OpenOffice.org.
+#
+# OpenOffice.org is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3
+# only, as published by the Free Software Foundation.
+#
+# OpenOffice.org is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License version 3 for more details
+# (a copy is included in the LICENSE file that accompanied this code).
+#
+# You should have received a copy of the GNU Lesser General Public License
+# version 3 along with OpenOffice.org.  If not, see
+# <http://www.openoffice.org/license.html>
+# for a copy of the LGPLv3 License.
+#
+#*************************************************************************
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ar	فاحص الكائنات				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	be-BY	Інспектар аб'ектаў				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	bg	Инспектор на обекти				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	br	Enseller an ergorenn				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ca	Inspector d'objectes				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	cs	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	da	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	de	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	en-GB	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	eo	Objekta inspektilo				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	es	Inspector de Objeto				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	et	Objektide inspektor				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	fr	Inspecteur d'objet				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	gu	ઓબ્જેક્ટ પરિક્ષક				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	hr	Preglednik objekta				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	hu	Objektumvizsgáló				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	it	Ispettore oggetti				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ja	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	km	ឧបករណ៍​ត្រួត​ពិនិត្យ​វត្ថុ				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ko	개체 검사기				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	lt	Objektų tikrintuvas				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	mk	Инспектор на објекти				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	nb	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ne	_: Addon.xcu#.Addon.AddonUI.OfficeToolBar.org.openoffice.Object_Inspector.Title.value.text\nObject Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	nl	Object-inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	nn	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	pa-IN	ਆਬਜੈਕਟ ਇੰਸਪੈਕਟਰ				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	pl	Inspektor obiektów				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	pt	Inspector de objectos				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	pt-BR	Inspetor de objeto				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	ru	Инспектор объектов				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	rw	Umugenzuzi w'ibintu				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	sl	Nadzornik predmetov				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	sv	Objektinspektör				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	tr	Nesne Denetleyici				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	uz	Obʼekt inspektori				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	vi	Bộ xem xét đối tượng				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	zh-CN	对象检查				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector	Title			0	zh-TW	物件檢視器				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ar	ش~غّل الفاحص...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	be-BY	Пусціць Інспектар...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	bg	~Стартиране на инспектора...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	br	Lañsañ an enseller...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ca	~Inicia l'inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	cs	Spustit Inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	da	~Start Inspektør...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	de	~Inspector starten...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	en-GB	~Start Inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	eo	Ruli inspektilon...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	es	~Iniciar Inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	et	Inspektori käivitamine...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	fr	~Démarrer l'inspecteur...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	gu	પરિક્ષક શરૂ કરો (~S)...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	hr	~Start Inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	hu	~Vizsgáló indítása...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	it	~Avvia Ispettore...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ja	In~spector の開始...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	km	ចាប់ផ្ដើម​ឧបករណ៍​ត្រួតពិនិត្យ​វត្ថុ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ko	검사기 시작(~S)...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	lt	~Paleisti tikrintuvą...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	mk	~Стартувај инспектор ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	nb	~Startsinspektør ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ne	~Start Inspector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	nl	Inspector opstarten...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	nn	~Startinspektør ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	pa-IN	ਇੰਸਪੈਕਟਰ ਚਾਲੂ(~S)...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	pl	~Uruchom Inspektora obiektów...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	pt	Iniciar in~spector...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	pt-BR	Iniciar in~spetor...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	ru	Запустить инспектор объектов...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	rw	~Gutangiza Mugenzura...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	sl	~Zaženi nadzornika ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	sv	~Starta Inspektör ...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	tr	Denetleyiciyi ~Başlat...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	uz	~Inspektorni ishga tushirish...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	vi	Khởi chạ~y bộ xem xét...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	zh-CN	开始检查(~S)...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addon.xcu	0	value	.Addon.AddonUI.OfficeToolBar.org.openoffice.Object-Inspector.m1	Title			0	zh-TW	啟動檢視器(~S)...				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ar	فاحص الكائنات				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	be-BY	Іспектар аб'ектаў				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	bg	Инспектор на обекти				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	br	Enseller an ergorenn				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ca	Inspector d'objectes				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	cs	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	da	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	de	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	en-GB	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	eo	Objekta inspektilo				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	es	Inspector de Objeto				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	et	Objektide inspektor				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	fr	Inspecteur d'objet				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	gu	ઓબ્જેક્ટ પરિક્ષક				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	hr	Preglednik objekta				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	hu	Objektumvizsgáló				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	it	Ispettore oggetti				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ja	Object Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	km	ឧបករណ៍​ត្រួត​ពិនិត្យ​វត្ថុ				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ko	개체 검사기				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	lt	Objektų tikrintuvas				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	mk	Инспектор на објекти				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	nb	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ne	_: Addons.xcu#.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector.Title.value.text\nObject Inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	nl	Object-inspector				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	nn	Objektinspektør				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	pa-IN	ਆਬਜੈਕਟ ਇੰਸਪੈਕਟਰ				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	pl	Inspektor obiektów				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	pt	Inspector de objectos				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	pt-BR	Inspetor de objeto				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	ru	Инспектор объектов				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	rw	Umugenzuzi w'ibintu				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	sl	Nadzornik predmetov				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	sv	Objektinspektör				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	tr	Nesne Denetleyici				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	uz	Obʼekt inspektori				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	vi	Bộ xem xét đối tượng				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	zh-CN	对象检查				2002-02-02 02:02:02
+odk	examples\java\Inspector\Addons.xcu	0	value	.Addons.AddonUI.OfficeToolBar.org.openoffice.Office.addon.Inspector.toolBar_Inspector	Title			0	zh-TW	物件檢視器				2002-02-02 02:02:02
