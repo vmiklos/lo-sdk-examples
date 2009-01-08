@@ -329,4 +329,10 @@ public class UnoTreeModel
     }
     return index;
   }
+  
+  public void setFilter(String filter)
+  {
+    ((HideableMutableTreeNode)getRoot()).setFilter(filter);
+  }
+  
 }

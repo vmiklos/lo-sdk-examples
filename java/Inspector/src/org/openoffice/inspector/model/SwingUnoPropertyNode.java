@@ -1,15 +1,9 @@
 /*************************************************************************
  *
- *  $RCSfile: SwingUnoPropertyNode.java,v $
- *
- *  $Revision: 1.3 $
- *
- *  last change: $Author: rt $ $Date: 2007/04/04 09:22:07 $
- *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
  *  
- *  Copyright (c) 2003 by Sun Microsystems, Inc.
+ *  Copyright (c) 2003, 2009 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -37,12 +31,16 @@
  *  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *     
  *************************************************************************/
+
 package org.openoffice.inspector.model;
 
 import com.sun.star.beans.Property;
-import com.sun.star.beans.PropertyValue;
 import org.openoffice.inspector.Introspector;
 
+/**
+ * 
+ * @author Christian Lins (cli@openoffice.org)
+ */
 public class SwingUnoPropertyNode 
   extends SwingUnoNode
 {
@@ -59,6 +57,12 @@ public class SwingUnoPropertyNode
     }
 
     add(new DummyNode());
+  }
+  
+  @Override
+  public boolean isVisible()
+  {
+    return true; // TODO
   }
   
   @Override

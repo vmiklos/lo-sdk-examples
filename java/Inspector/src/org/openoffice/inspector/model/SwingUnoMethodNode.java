@@ -31,6 +31,7 @@
  *  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *     
  *************************************************************************/
+
 package org.openoffice.inspector.model;
 
 import com.sun.star.reflection.XIdlClass;
@@ -38,9 +39,11 @@ import com.sun.star.reflection.XIdlMethod;
 import com.sun.star.uno.TypeClass;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-import org.openoffice.inspector.gui.MethodParametersDialog;
 
+/**
+ * 
+ * @author Christian Lins (cli@openoffice.org)
+ */
 public class SwingUnoMethodNode 
   extends SwingUnoNode 
   implements ActionListener
@@ -56,6 +59,12 @@ public class SwingUnoMethodNode
   public boolean isFoldable()
   {
     return ((UnoMethodNode)getUnoNode()).isFoldable();
+  }
+  
+  @Override
+  public boolean isVisible()
+  {
+    return true; //TODO
   }
 
   @Override
