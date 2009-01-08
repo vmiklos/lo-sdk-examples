@@ -35,7 +35,10 @@
 
 package org.openoffice.inspector.gui;
 
+import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import org.openoffice.inspector.codegen.Language;
 
 /**
  *
@@ -43,7 +46,128 @@ import javax.swing.JFileChooser;
  */
 public class CodeFileChooser extends JFileChooser
 {
-  public CodeFileChooser()
+  
+  static abstract class CodeFileFilter extends FileFilter
   {
+    public boolean accept(File file)
+    {
+      return file.isDirectory() || file.getName().endsWith(getExtension());
+    }
+        
+    public abstract String getExtension();
+  }
+  
+  static class JavaFileFilter extends CodeFileFilter
+  {   
+    public String getDescription()
+    {
+      return "Java source (*.java)";
+    }
+    
+    public String getExtension()
+    {
+      return ".java";
+    }
+  }
+  
+  static class CPlusPlusFileFilter extends CodeFileFilter
+  {
+    @Override
+    public boolean accept(File file)
+    {
+      return file.getName().endsWith(".cpp") || super.accept(file);
+    }
+    
+    public String getDescription()
+    {
+      return "C++ source (*.cpp|*.cxx)";
+    }
+    
+    public String getExtension()
+    {
+      return ".cxx";
+    }
+  }
+  
+  static class PythonFileFilter extends CodeFileFilter
+  {
+    public String getDescription()
+    {
+      return "Python script (*.py)";
+    }
+    
+    public String getExtension()
+    {
+      return ".py";
+    }
+  }
+  
+  static class BasicFileFilter extends CodeFileFilter
+  {
+    public String getDescription()
+    {
+      return "Basic script (*.bas)";
+    }
+    
+    public String getExtension()
+    {
+      return ".bas";
+    }
+  }
+  
+  public CodeFileChooser(Language lang)
+  {
+    CodeFileFilter cff;
+    
+    switch(lang)
+    {
+      case Java:
+      {
+        cff = new JavaFileFilter();
+        addChoosableFileFilter(cff);
+        setFileFilter(cff);
+        break;
+      }
+      case CPlusPlus:
+      {
+        cff = new CPlusPlusFileFilter();
+        addChoosableFileFilter(cff);
+        setFileFilter(cff);
+        break;
+      }
+      case Python:
+      {
+        cff = new PythonFileFilter();
+        addChoosableFileFilter(cff);
+        setFileFilter(cff);
+        break;
+      }
+      case StarBasic:
+      {
+        cff = new BasicFileFilter();
+        addChoosableFileFilter(cff);
+        setFileFilter(cff);
+        break;
+      }
+    }
+  }
+  
+  @Override
+  public File getSelectedFile()
+  {
+    if(getFileFilter() != null)
+    {
+      File   file = super.getSelectedFile();
+      String ext  = ((CodeFileFilter)getFileFilter()).getExtension();
+
+      if(file != null && !file.getName().endsWith(ext))
+      {
+        file = new File(file.getAbsolutePath() + ext);
+      }
+
+      return file;
+    }
+    else
+      return super.getSelectedFile();
   }
 }

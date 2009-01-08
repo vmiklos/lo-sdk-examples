@@ -54,6 +54,8 @@ import org.openoffice.inspector.model.UnoTreeModel;
  */
 class MenuBar extends JMenuBar
 {
+  
+  private Language       currentLang = Language.Java;
   private InspectorFrame frame;
   private JMenu jMnuOptions = new JMenu("Options");
   private JRadioButtonMenuItem jJavaMenuItem = null;
@@ -212,6 +214,7 @@ class MenuBar extends JMenuBar
             CodeGenerator.getInstance(lang, ((SwingUnoNode)model.getRoot()).getUnoObject());
           String code      = codeGen.getSourceCode();
           pane.getCodePane().setCode(code);
+          currentLang = lang;
         }
         catch(Exception ex)
         {
@@ -235,5 +238,10 @@ class MenuBar extends JMenuBar
       oButtonGroup, "Generate OpenOffice.org Basic Sourcecode", false, 'B', Language.StarBasic);
     jMnuOptions.add(jBasicMenuItem);
     inspectMenuBar.add(jMnuOptions);
+  }
+  
+  public Language getSelectedLanguage()
+  {
+    return this.currentLang;
   }
 }

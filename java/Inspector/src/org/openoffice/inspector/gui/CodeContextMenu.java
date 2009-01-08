@@ -36,7 +36,11 @@ package org.openoffice.inspector.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 /**
@@ -62,10 +66,26 @@ class CodeContextMenu
   {
     if(event.getSource().equals(this.itemSaveToFile))
     {
-      CodeFileChooser cfc = new CodeFileChooser();
+      MenuBar mb = (MenuBar)InspectorFrame.getInstance().getJMenuBar();
+      CodeFileChooser cfc = new CodeFileChooser(mb.getSelectedLanguage());
       if(cfc.showSaveDialog(codePane) == CodeFileChooser.APPROVE_OPTION)
       {
-         
+        try
+        {
+          FileOutputStream out = new FileOutputStream(cfc.getSelectedFile());
+          out.write(codePane.getCode().getBytes(Charset.forName("UTF-8")));
+          out.flush();
+          out.close();
+        }
+        catch(IOException ex)
+        {
+          String[] msg = 
+            {
+              "An exception occurred while saving:",
+              ex.getLocalizedMessage()
+            };
+          JOptionPane.showMessageDialog(null, msg);
+        }
       }
     }
   }

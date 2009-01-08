@@ -58,6 +58,11 @@ public class CodePane extends JPanel
     add(new JLabel("Generated Codefragment:"), BorderLayout.NORTH);
     add(this.code, BorderLayout.CENTER);
   }
+
+  public String getCode()
+  {
+    return this.code.getText();
+  }
   
   public void setCode(String code)
   {

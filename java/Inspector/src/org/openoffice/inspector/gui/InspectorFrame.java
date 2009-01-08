@@ -36,15 +36,10 @@ package org.openoffice.inspector.gui;
 
 import com.sun.star.uno.XComponentContext;
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import org.openoffice.inspector.Inspector;
-import org.openoffice.inspector.codegen.Language;
 
 /**
  *
@@ -81,7 +76,7 @@ public class InspectorFrame extends JFrame
     setJMenuBar(new MenuBar(this));
     setSize(950, 750);
   }
-
+  
   public JTabbedPane getTabbedPane()
   {
     return this.tabbedPane;
