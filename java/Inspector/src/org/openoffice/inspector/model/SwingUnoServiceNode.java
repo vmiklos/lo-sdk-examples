@@ -48,6 +48,6 @@ public class SwingUnoServiceNode extends SwingUnoNode
   @Override
   public boolean isVisible()
   {
-    return true; // TODO
+    return getUnoNode().getNodeDescription().toLowerCase().contains(filter);
   }
 }

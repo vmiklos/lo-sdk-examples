@@ -34,13 +34,12 @@
 
 package org.openoffice.inspector.model;
 
-import com.sun.star.uno.Type;
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
- * 
+ * Root node of the tree.
  * @author Christian Lins (cli@openoffice.org)
  */
 public class SwingUnoNode
@@ -121,34 +120,6 @@ public class SwingUnoNode
     return (UnoNode)getUserObject();
   }
 
-  public void setVisible(String _sFilter)
-  {
-    boolean bisVisible = isFilterApplicable(_sFilter);
-    super.setVisible(bisVisible);
-  }
-
-  public boolean isFilterApplicable(String _sFilter)
-  {
-    return false; //return m_oUnoNode.isFilterApplicable(_sFilter, getName());
-  }
-
-  public void setParameterObjects(Object[] _oParamObjects)
-  {
-    throw new NoSuchMethodError();
-    //m_oUnoNode.setParameterObjects(_oParamObjects);
-  }
-
-  public void openIdlDescription(String _SDKPath)
-  {
-    throw new NoSuchMethodError();
-   // m_oUnoNode.openIdlDescription(_SDKPath, getClassName(), getAnchor());
-  }
-
-  public Object[] getParameterObjects()
-  {
-    return null; //return m_oUnoNode.getParameterObjects();
-  }
-
   public String getClassName()
   {
     String sClassName = ((UnoNode)getUserObject()).getClassName();
@@ -167,52 +138,9 @@ public class SwingUnoNode
     return sClassName;
   }
 
-  public String getAnchor()
-  {
-    return null;//return m_oUnoNode.getAnchor();
-  }
-
-  public void setFoldable(boolean _bIsFoldable)
-  {
-  /*    if (_bIsFoldable){
-  addDummyNode();
-  }
-  else{
-  removeDummyNode();
-  }*/
-  }
-
-  public void setLabel(String _sLabel)
-  {
-    super.setUserObject(_sLabel);
-  // this.m_oUnoNode.setLabel(_sLabel);
-  }
-
-  public String getLabel()
-  {
-    return getUserObject().getClass().getName();
-  }
-
-  public int getNodeType()
-  {
-    throw new NoSuchMethodError();
-    //return m_oUnoNode.getNodeType();
-  }
-
-  public void setNodeType(int _nNodeType)
-  {
-    throw new NoSuchMethodError();
-    //m_oUnoNode.setNodeType(_nNodeType);
-  }
-
   public String getName()
   {
     return getClassName();
   }
 
-  public Type getUnoType()
-  {
-    throw new NoSuchMethodError();
-    //return m_oUnoNode.getUnoType();
-  }
 }

@@ -38,7 +38,7 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- *
+ * A TreeNode capsulating UnoInterfaceNodes.
  * @author Christian Lins (cli@openoffice.org)
  */
 public class SwingUnoInterfaceNode extends SwingUnoNode
@@ -53,7 +53,7 @@ public class SwingUnoInterfaceNode extends SwingUnoNode
   @Override
   public boolean isVisible()
   {
-    return true; // TODO
+    return getUnoNode().getNodeDescription().toLowerCase().contains(filter);
   }
   
   @Override

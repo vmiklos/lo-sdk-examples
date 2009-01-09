@@ -34,6 +34,8 @@
 
 package org.openoffice.inspector.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
@@ -45,7 +47,11 @@ public class HideableMutableTreeNode extends DefaultMutableTreeNode
 {
 
   protected String  filter    = "";
+  protected List<HideableMutableTreeNode> hiddenChildren =
+    new ArrayList<HideableMutableTreeNode>();
   protected boolean isVisible = true;
+  
+  private UnoTreeModel model  = null;
 
   /**
    * Creates a tree node that has no parent and no children, but which 
@@ -78,11 +84,33 @@ public class HideableMutableTreeNode extends DefaultMutableTreeNode
   {
     super(userObject, allowsChildren);
   }
-
+  
+  protected UnoTreeModel getModel()
+  {
+    return this.model;
+  }
+  
+  protected void setModel(UnoTreeModel model)
+  {
+    this.model = model;
+  }
+  
+  public void add(HideableMutableTreeNode node)
+  {
+    node.setFilter(filter);
+    if(node.isVisible())
+    {
+      super.add(node);
+    }
+    else
+    {
+      this.hiddenChildren.add(node);
+    }
+  }
+  
   /**
    * Subclasses should override this method to support
    * customized filtering.
-   * @return true if the node is visible, else false
    */
   public boolean isVisible()
   {
@@ -94,6 +122,8 @@ public class HideableMutableTreeNode extends DefaultMutableTreeNode
     this.filter = filter;
     if(isVisible())
     {
+      List<HideableMutableTreeNode> newHidden = new ArrayList<HideableMutableTreeNode>();
+
       // Give the filter down to all appropriate children
       for(int n = 0; n < getChildCount(); n++)
       {
@@ -102,15 +132,43 @@ public class HideableMutableTreeNode extends DefaultMutableTreeNode
         {
           HideableMutableTreeNode hnode = (HideableMutableTreeNode)node;
           hnode.setFilter(filter);
+          if(!hnode.isVisible())
+            newHidden.add(hnode);
         }
+      }
+      
+      // Check the old hidden nodes if there are still hidden
+      for(HideableMutableTreeNode node : this.hiddenChildren)
+      {
+        node.setFilter(filter);
+        if(node.isVisible())
+          super.add(node); // The local add() performs the same visibility check
+        else
+          newHidden.add(node);
+      }
+      
+      // Remove all new hidden node as children
+      for(HideableMutableTreeNode node : newHidden)
+      {
+        if(isNodeChild(node))
+          remove(node);
+      }
+      
+      this.hiddenChildren = newHidden;
+      
+      // This is a little bit hacky!
+      TreeNode[] path = getPath();
+      if(path != null && path.length > 0)
+      {
+        UnoTreeModel mdl = ((HideableMutableTreeNode)path[0]).getModel();
+        if(mdl != null)
+          mdl.nodeStructureChanged(this);
       }
     }
   }
   
   /**
-   * Sets if the node is visible. 
-   * 
-   * @param  returns true if the node is visible, else false
+   * Sets if the node is visible.
    */
   public void setVisible(boolean isVisible)
   {

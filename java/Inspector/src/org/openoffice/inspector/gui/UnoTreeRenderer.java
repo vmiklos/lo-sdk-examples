@@ -1,15 +1,9 @@
 /*************************************************************************
  *
- *  $RCSfile: UnoTreeRenderer.java,v $
- *
- *  $Revision: 1.6 $
- *
- *  last change: $Author: rt $ $Date: 2007/11/06 15:08:15 $
- *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
  *
- *  Copyright (c) 2003 by Sun Microsystems, Inc.
+ *  Copyright (c) 2003, 2009 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -40,22 +34,17 @@
 package org.openoffice.inspector.gui;
 
 import java.awt.Component;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import org.openoffice.inspector.model.SwingUnoInterfaceNode;
 import org.openoffice.inspector.model.SwingUnoMethodNode;
 import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.model.SwingUnoPropertyNode;
 import org.openoffice.inspector.model.SwingUnoServiceNode;
-import org.openoffice.inspector.model.UnoNode;
 
 public class UnoTreeRenderer extends DefaultTreeCellRenderer
 {

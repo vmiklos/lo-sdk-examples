@@ -62,7 +62,7 @@ public class SwingUnoPropertyNode
   @Override
   public boolean isVisible()
   {
-    return true; // TODO
+    return getProperty().Name.toLowerCase().contains(filter);
   }
   
   @Override

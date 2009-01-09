@@ -36,10 +36,8 @@ package org.openoffice.inspector.gui;
 
 import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.model.UnoTreeModel;
-import com.sun.star.reflection.XIdlMethod;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
-import org.openoffice.inspector.model.SwingUnoMethodNode;
 
 public class InspectionTree 
   extends JTree 
@@ -49,6 +47,7 @@ public class InspectionTree
   {
     setModel(model);
     setCellRenderer(new UnoTreeRenderer());
+    model.setTree(this);
     
     InspectionTreeListener itl = new InspectionTreeListener(model, this);
     addTreeWillExpandListener(itl);
@@ -69,32 +68,6 @@ public class InspectionTree
       oUnoNode = (SwingUnoNode) oNode;
     }
     return oUnoNode;
-  }
-
-  public void nodeInserted(SwingUnoNode _oParentNode, SwingUnoNode _oChildNode, int index)
-  {
-    //getModel().nodeInserted(_oParentNode, _oChildNode, _oParentNode.getChildCount() - 1);
-  }
-
-  public void nodeChanged(SwingUnoNode _oNode)
-  {
-    //getModel().nodeChanged(_oNode);
-  }
-
-  public boolean setNodeVisible(Object node, boolean v)
-  {
-    return false; //getModel().setNodeVisible(node, v);
-  }
-
-  public SwingUnoNode addUnoNode(Object _oUnoObject)
-  {
-    return null;//return new SwingUnoNode(_oUnoObject);
-  }
-
-  public SwingUnoMethodNode addMethodNode(Object _objectElement, XIdlMethod _xIdlMethod)
-  {
-//    SwingUnoMethodNode oSwingUnoMethodNode = new SwingUnoMethodNode(_xIdlMethod, _objectElement, m_xDialogProvider);
-    return null; //oSwingUnoMethodNode;
   }
 
 }

@@ -37,8 +37,6 @@ package org.openoffice.inspector.model;
 import com.sun.star.reflection.XIdlClass;
 import com.sun.star.reflection.XIdlMethod;
 import com.sun.star.uno.TypeClass;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * 
@@ -46,7 +44,6 @@ import java.awt.event.ActionListener;
  */
 public class SwingUnoMethodNode 
   extends SwingUnoNode 
-  implements ActionListener
 {
 
   public SwingUnoMethodNode(UnoMethodNode node)
@@ -55,16 +52,11 @@ public class SwingUnoMethodNode
     
     add(new DummyNode());
   }
-
-  public boolean isFoldable()
-  {
-    return ((UnoMethodNode)getUnoNode()).isFoldable();
-  }
   
   @Override
   public boolean isVisible()
   {
-    return true; //TODO
+    return getUnoNode().getNodeDescription().toLowerCase().contains(filter);
   }
 
   @Override
@@ -85,35 +77,6 @@ public class SwingUnoMethodNode
     return sClassName;
   }
 
-  @Override
-  public String getAnchor()
-  {
-    return ((UnoMethodNode)getUnoNode()).getAnchor();
-  }
-
-  /**
-   * Invokes the method for the given arguments.
-   * @param _oUnoObject
-   * @param _oParameters
-   * @return
-   * @throws com.sun.star.uno.Exception
-   */
-  public Object invoke(Object _oUnoObject, Object[] _oParameters) 
-    throws com.sun.star.uno.Exception
-  {
-    return ((UnoMethodNode)getUnoNode()).invoke(_oUnoObject, _oParameters);
-  }
-
-  public Object[] getLastParameterObjects()
-  {
-    return ((UnoMethodNode)getUnoNode()).getLastParameterObjects();
-  }
-
-  public Object getLastUnoReturnObject()
-  {
-    return ((UnoMethodNode)getUnoNode()).getLastUnoReturnObject();
-  }
-
   public TypeClass getTypeClass()
   {
     return ((UnoMethodNode)getUnoNode()).getTypeClass();
@@ -122,36 +85,6 @@ public class SwingUnoMethodNode
   public XIdlMethod getXIdlMethod()
   {
     return ((UnoMethodNode)getUnoNode()).getXIdlMethod();
-  }
-
-  public boolean hasParameters()
-  {
-    return ((UnoMethodNode)getUnoNode()).hasParameters();
-  }
-
-  public Object invoke() throws com.sun.star.uno.Exception
-  {
-    return ((UnoMethodNode)getUnoNode()).invoke();
-  }
-
-  public boolean isInvoked()
-  {
-    return((UnoMethodNode)getUnoNode()).isInvoked();
-  }
-
-  public boolean isInvokable()
-  {
-    return ((UnoMethodNode)getUnoNode()).isInvokable();
-  }
-
-  public boolean isPrimitive()
-  {
-    return ((UnoMethodNode)getUnoNode()).isPrimitive();
-  }
-
-  public void actionPerformed(ActionEvent e)
-  {
-    //openIdlDescription(m_xDialogProvider.getIDLPath());
   }
 
   public String getParameterDescription()
@@ -168,6 +101,6 @@ public class SwingUnoMethodNode
   public void reintrospectChildren()
   {
     XIdlClass ret = ((UnoMethodNode)getUnoNode()).getXIdlMethod().getReturnType();
-    add(new HideableMutableTreeNode("Returns " + ret.getName()));
+    add(new HideableMutableTreeNode("Return type: " + ret.getName()));
   }
 }

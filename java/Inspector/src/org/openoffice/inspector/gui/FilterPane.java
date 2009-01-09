@@ -43,13 +43,14 @@ import javax.swing.event.CaretListener;
 import org.openoffice.inspector.model.UnoTreeModel;
 
 /**
- *
+ * Swing panel containing a textfield for editing the filter string.
  * @author Christian Lins (cli@openoffice.org)
  */
 class FilterPane extends JPanel
 {
 
-  private JTextField    txtFilter = new JTextField();
+  private JTextField txtFilter  = new JTextField();
+  private String     lastFilter = "";
   
   public FilterPane(final UnoTreeModel treeModel)
   {
@@ -61,8 +62,13 @@ class FilterPane extends JPanel
     {
       public void caretUpdate(CaretEvent event)
       {
-        System.out.println("Filter:" + txtFilter.getText());
-        treeModel.setFilter(txtFilter.getText());
+        if(!txtFilter.getText().equals(lastFilter))
+        {
+          String newFilter = txtFilter.getText().toLowerCase();
+          System.out.println("Filter:" + newFilter);
+          treeModel.setFilter(newFilter);
+          lastFilter = newFilter;
+        }
       }
     });
   }
