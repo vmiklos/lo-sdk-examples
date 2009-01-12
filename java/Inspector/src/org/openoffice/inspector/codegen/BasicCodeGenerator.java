@@ -34,6 +34,7 @@
 
 package org.openoffice.inspector.codegen;
 
+import com.sun.star.reflection.XIdlMethod;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -56,6 +57,18 @@ public class BasicCodeGenerator
   public String getSourceCode()
   {
     return tmplProgram.toString();
+  }
+  
+  @Override
+  public void addAccessorCodeFor(Object unoObject)
+  {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
+
+  @Override
+  public void addInvokeCodeFor(Object unoObject, XIdlMethod method)
+  {
+    throw new UnsupportedOperationException("Not supported yet.");
   }
 
 }

@@ -45,30 +45,25 @@ import org.openoffice.inspector.Introspector;
 public class UnoMethodNode extends UnoNode
 {
 
-  XIdlMethod m_xIdlMethod = null;
-  Object[] m_oParamObjects = null;
-  Object m_oUnoReturnObject = null;
-  boolean m_bisInvoked = false;
-  //SwingUnoMethodNode m_xUnoMethodNode = null;
+  XIdlMethod xIdlMethod      = null;
+  Object[]   paramObjects    = null;
+  Object     unoReturnObject = null;
+  boolean    isInvoked       = false;
 
-  /** Creates a new instance of UnoMethodNode */
-  public UnoMethodNode(XIdlMethod _xIdlMethod, Object _oUnoObject/*, SwingUnoMethodNode _xUnoMethodNode*/)
+  /** 
+   * Creates a new instance of UnoMethodNode 
+   */
+  public UnoMethodNode(XIdlMethod xIdlMethod, Object unoObject)
   {
-    super(_oUnoObject);
-    m_xIdlMethod = _xIdlMethod;
-    m_oParamObjects = new Object[m_xIdlMethod.getParameterInfos().length];
-    //m_xUnoMethodNode = _xUnoMethodNode;
-  }
-
-  protected boolean isFoldable()
-  {
-    return ((!this.isPrimitive()) && (getTypeClass().getValue() != TypeClass.VOID_value));
+    super(unoObject);
+    this.xIdlMethod   = xIdlMethod;
+    this.paramObjects = new Object[xIdlMethod.getParameterInfos().length];
   }
 
   protected boolean isInvokable()
   {
     boolean bisFoldable = true;
-    XIdlClass[] xIdlClasses = m_xIdlMethod.getParameterTypes();
+    XIdlClass[] xIdlClasses = xIdlMethod.getParameterTypes();
     for (int i = 0; i < xIdlClasses.length; i++)
     {
       bisFoldable = Introspector.isPrimitive(xIdlClasses[i].getTypeClass());
@@ -82,9 +77,10 @@ public class UnoMethodNode extends UnoNode
 
   public XIdlMethod getXIdlMethod()
   {
-    return m_xIdlMethod;
+    return xIdlMethod;
   }
 
+  @Override
   public String getAnchor()
   {
     return getXIdlMethod().getName();
@@ -95,44 +91,12 @@ public class UnoMethodNode extends UnoNode
     return getXIdlMethod().getName();
   }
 
-  public Object invoke()
-  {
-    Object oUnoReturnObject = null;
-    if (!hasParameters())
-    {
-      oUnoReturnObject = invokeParameterlessMethod();
-      m_bisInvoked = true;
-    }
-    else
-    {
-      Vector oUnoMethodObjects = null; //m_xUnoMethodNode.getMethodObjects();
-      if (oUnoMethodObjects != null)
-      {
-        for (int i = 0; i < getXIdlMethod().getParameterInfos().length; i++)
-        {
-          this.m_oParamObjects[i] = oUnoMethodObjects.get(i);
-        }
-        if (oUnoMethodObjects.size() == m_oParamObjects.length + 1)
-        {
-          oUnoReturnObject = oUnoMethodObjects.get(oUnoMethodObjects.size() - 1);
-        }
-        m_bisInvoked = (oUnoReturnObject != null);
-      }
-    }
-    m_oUnoReturnObject = oUnoReturnObject;
-    return oUnoReturnObject;
-  }
-
-  public boolean isInvoked()
-  {
-    return m_bisInvoked;
-  }
-
+  @Override
   public String getNodeDescription()
   {
     String sNodeDescription = "";
     String sParameters = getParameterDescription();
-    if (m_xIdlMethod.getParameterInfos().length > 0)
+    if (xIdlMethod.getParameterInfos().length > 0)
     {
       sNodeDescription = getStandardMethodDescription();
     }
@@ -153,34 +117,27 @@ public class UnoMethodNode extends UnoNode
 
   public String getStandardMethodDescription()
   {
-    String sNodeDescription = m_xIdlMethod.getReturnType().getName() + " " + m_xIdlMethod.getName() + " (" + getParameterDescription() + " )";
-    if (isPrimitive())
-    {
-      sNodeDescription += "";
-    }
+    String sNodeDescription = xIdlMethod.getReturnType().getName() + " " + 
+      xIdlMethod.getName() + " (" + getParameterDescription() + " )";
     return sNodeDescription;
   }
 
   public boolean hasParameters()
   {
-    return (m_xIdlMethod.getParameterInfos().length > 0);
+    return (xIdlMethod.getParameterInfos().length > 0);
   }
 
   public Object[] getLastParameterObjects()
   {
-    return m_oParamObjects;
-  }
-
-  public Object getLastUnoReturnObject()
-  {
-    return m_oUnoReturnObject;
+    return this.paramObjects;
   }
 
   public String getParameterDescription()
   {
-    ParamInfo[] paramInfo = m_xIdlMethod.getParameterInfos();
+    ParamInfo[] paramInfo = xIdlMethod.getParameterInfos();
     String sParameters = "";
-    String sStandardMethodDisplayText = m_xIdlMethod.getReturnType().getName() + " " + m_xIdlMethod.getName() + " (" + sParameters + " )";
+    String sStandardMethodDisplayText = xIdlMethod.getReturnType().getName() 
+      + " " + xIdlMethod.getName() + " (" + sParameters + " )";
     if (Introspector.isValid(paramInfo))
     {
       //  get all parameters with type and mode
@@ -223,37 +180,8 @@ public class UnoMethodNode extends UnoNode
 
   public TypeClass getTypeClass()
   {
-    XIdlClass xIdlClass = m_xIdlMethod.getReturnType();
+    XIdlClass xIdlClass = xIdlMethod.getReturnType();
     return xIdlClass.getTypeClass();
   }
 
-  private Object invokeParameterlessMethod()
-  {
-    try
-    {
-      Object[][] aParamInfo = new Object[1][];
-      aParamInfo[0] = new Object[]{};
-      return getXIdlMethod().invoke(getUnoObject(), aParamInfo);
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace(System.out);
-      return null;
-    }
-  }
-
-  public boolean isPrimitive()
-  {
-    return Introspector.isObjectPrimitive(m_xIdlMethod.getClass(), getTypeClass());
-  }
-
-  protected Object invoke(Object _oUnoObject, Object[] oParameters) throws com.sun.star.uno.Exception
-  {
-    Object[][] aParams = new Object[1][oParameters.length];
-    for (int i = 0; i < oParameters.length; i++)
-    {
-      aParams[0][i] = oParameters[i];
-    }
-    return m_xIdlMethod.invoke(_oUnoObject, aParams);
-  }
 }

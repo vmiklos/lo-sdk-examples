@@ -34,6 +34,7 @@
 
 package org.openoffice.inspector.codegen;
 
+import com.sun.star.reflection.XIdlMethod;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,6 +109,9 @@ public abstract class CodeGenerator
   protected CodeGenerator()
   {
   }
+  
+  public abstract void addAccessorCodeFor(Object unoObject);
+  public abstract void addInvokeCodeFor(Object unoObject, XIdlMethod method);
   
   public abstract Language  getLanguage();
   public abstract String    getSourceCode();

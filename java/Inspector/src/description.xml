@@ -3,4 +3,13 @@
 <description xmlns="http://openoffice.org/extensions/description/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
     <version value="2.0.0"/>
     <identifier value="org.openoffice.inspector.Inspector"/>
+    
+    <display-name>
+        <name lang="en">Object Inspector</name>
+        <name lang="de">Objekt Inspektor</name>
+    </display-name>
+
+    <publisher>
+        <name lang="en" xlink:href="http://api.openoffice.org/">OpenOffice.org</name>
+    </publisher>
 </description>

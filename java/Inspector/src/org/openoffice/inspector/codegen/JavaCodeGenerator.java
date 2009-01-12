@@ -34,12 +34,10 @@
 
 package org.openoffice.inspector.codegen;
 
-import com.sun.star.reflection.XTypeDescription;
-import com.sun.star.uno.TypeClass;
+import com.sun.star.beans.Pair;
+import com.sun.star.reflection.XIdlMethod;
 import java.util.ArrayList;
 import java.util.List;
-import org.openoffice.inspector.Introspector;
-import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -50,11 +48,12 @@ public class JavaCodeGenerator
   extends CodeGenerator 
 {
   
-  private boolean bAddAnyConverter = false;
-  private boolean bAddTypeImport = false;
-  private boolean bIsPropertyUnoObjectDefined = false;
-  
   private List<Class<?>> queryInterfaces = new ArrayList<Class<?>>();
+  
+  private List<Pair<Object, XIdlMethod>> invokeMethods = new ArrayList<Pair<Object, XIdlMethod>>();
+  
+  private StringTemplate tmplInvoke = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/JavaInvoke.tmpl"));
   
   private StringTemplate tmplProgram = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/JavaProgramStub.tmpl"));
@@ -87,6 +86,12 @@ public class JavaCodeGenerator
       imports.append(";\n");
     }
     
+    // Invoke all methods
+    for(Pair<Object, XIdlMethod> p : this.invokeMethods)
+    {
+      
+    }
+    
     tmplProgram.set("imports", imports.toString());
     tmplProgram.set("code", code.toString());
     
@@ -104,6 +109,24 @@ public class JavaCodeGenerator
     super.setRootObject(obj);
     
     this.queryInterfaces.add(obj.getClass());
+  }
+
+  @Override
+  public void addAccessorCodeFor(Object unoObject)
+  {
+    
+  }
+
+  /**
+   * Generates code that shows the invocation of the given method
+   * at the specified unoObject.
+   * @param unoObject
+   * @param method
+   */
+  @Override
+  public void addInvokeCodeFor(Object unoObject, XIdlMethod method)
+  {
+    this.invokeMethods.add(new Pair<Object, XIdlMethod>(unoObject, method));
   }
 
 }

@@ -91,11 +91,6 @@ public class SwingUnoMethodNode
   {
     return ((UnoMethodNode)getUnoNode()).getParameterDescription();
   }
-
-  public String getStandardMethodDescription()
-  {
-    return ((UnoMethodNode)getUnoNode()).getStandardMethodDescription();
-  }
   
   @Override
   public void reintrospectChildren()
