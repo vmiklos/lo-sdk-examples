@@ -66,9 +66,9 @@ public class BasicCodeGenerator
   }
 
   @Override
-  public void addInvokeCodeFor(Object unoObject, XIdlMethod method)
+  public void addInvokeCodeFor(XIdlMethod method)
   {
-    throw new UnsupportedOperationException("Not supported yet.");
+
   }
 
 }

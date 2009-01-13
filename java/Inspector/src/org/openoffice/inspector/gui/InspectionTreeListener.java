@@ -41,7 +41,6 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
-import org.openoffice.inspector.codegen.CodeGenerator;
 import org.openoffice.inspector.model.DummyNode;
 import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.model.UnoTreeModel;
@@ -123,14 +122,6 @@ class InspectionTreeListener
         new NodeContextMenu(node).show(tree, event.getX(), event.getY());
       }
     }
-    
-    // Update code view
-    Object        unoObject = ((SwingUnoNode)this.model.getRoot()).getUnoObject();
-    CodeGenerator codeGen   = CodeGenerator.getInstance(unoObject);
-    String        code      = codeGen.getSourceCode();
-    InspectorPane pane = 
-      (InspectorPane)InspectorFrame.getInstance().getTabbedPane().getSelectedComponent();
-    pane.getCodePane().setCode(code);
   }
 
 }

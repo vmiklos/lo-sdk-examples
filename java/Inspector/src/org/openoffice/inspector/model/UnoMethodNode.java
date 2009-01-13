@@ -39,7 +39,6 @@ import com.sun.star.reflection.ParamMode;
 import com.sun.star.reflection.XIdlClass;
 import com.sun.star.reflection.XIdlMethod;
 import com.sun.star.uno.TypeClass;
-import java.util.Vector;
 import org.openoffice.inspector.Introspector;
 
 public class UnoMethodNode extends UnoNode
@@ -138,7 +137,7 @@ public class UnoMethodNode extends UnoNode
     String sParameters = "";
     String sStandardMethodDisplayText = xIdlMethod.getReturnType().getName() 
       + " " + xIdlMethod.getName() + " (" + sParameters + " )";
-    if (Introspector.isValid(paramInfo))
+//    if (Introspector.isValid(paramInfo))
     {
       //  get all parameters with type and mode
       for (int i = 0; i < paramInfo.length; i++)

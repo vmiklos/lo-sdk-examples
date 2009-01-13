@@ -38,18 +38,28 @@ import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.openoffice.inspector.codegen.CodeGenerator;
+import org.openoffice.inspector.codegen.CodeUpdateEvent;
+import org.openoffice.inspector.codegen.CodeUpdateListener;
+import org.openoffice.inspector.codegen.Language;
+import org.openoffice.inspector.model.UnoTreeModel;
 
 /**
- *
+ * Pane that contains a non-editable text component containing
+ * generated sourcecode.
  * @author Christian Lins (cli@openoffice.org)
  */
-public class CodePane extends JPanel
+public class CodePane 
+  extends JPanel
+  implements CodeUpdateListener
 {
   
-  private JEditorPane code = new JEditorPane();
+  private JEditorPane  code      = new JEditorPane();
+  private UnoTreeModel treeModel = null;
   
-  public CodePane()
+  public CodePane(UnoTreeModel model)
   {
+    this.treeModel = model;
     this.code.setEditable(false);
     this.code.setContentType("text/java");
     this.code.setComponentPopupMenu(new CodeContextMenu(this));
@@ -57,14 +67,40 @@ public class CodePane extends JPanel
     setLayout(new BorderLayout());
     add(new JLabel("Generated Codefragment:"), BorderLayout.NORTH);
     add(this.code, BorderLayout.CENTER);
+    
+    // Register at CodeGenerators
+    try
+    {
+      CodeGenerator[] codeGens = CodeGenerator.getInstances(
+        model.getUnoRoot());
+      
+      for(CodeGenerator codeGen : codeGens)
+      {
+        if(codeGen != null)
+          codeGen.addCodeUpdateListener(this);
+      }
+    }
+    catch(Exception ex)
+    {
+      ex.printStackTrace();
+    }
   }
 
+  /**
+   * Is called when a CodeGenerator changes something in the code.
+   * @param event
+   */
+  public void codeUpdated(CodeUpdateEvent event)
+  {
+    setCode(event.getSourceCode());
+  }
+  
   public String getCode()
   {
     return this.code.getText();
   }
   
-  public void setCode(String code)
+  protected void setCode(String code)
   {
     this.code.setText(code);
   }

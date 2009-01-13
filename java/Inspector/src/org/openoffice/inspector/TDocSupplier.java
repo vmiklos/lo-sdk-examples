@@ -1,11 +1,5 @@
 /*************************************************************************
  *
- *  $RCSfile: TDocSupplier.java,v $
- *
- *  $Revision: 1.2 $
- *
- *  last change: $Author: hr $ $Date: 2007/01/02 15:01:09 $
- *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
  *  

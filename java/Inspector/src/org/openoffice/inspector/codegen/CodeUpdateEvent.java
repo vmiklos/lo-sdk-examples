@@ -3,7 +3,7 @@
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
  *  
- *  Copyright (c) 2003, 2009 by Sun Microsystems, Inc.
+ *  Copyright (c) 2009 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -34,41 +34,34 @@
 
 package org.openoffice.inspector.codegen;
 
-import com.sun.star.reflection.XIdlMethod;
-import org.openoffice.inspector.util.Resource;
-import org.openoffice.inspector.util.StringTemplate;
-
-public class CPlusPlusCodeGenerator 
-  extends CodeGenerator
+/**
+ * CodeUpdateEvent is raised by the CodeGenerator classes and
+ * used by the CodeUpdateListeners to get information about the
+ * code update.
+ * @author Christian Lins (cli@openoffice.org)
+ */
+public class CodeUpdateEvent 
 {
-  
-  private StringTemplate tmplProgram = new StringTemplate(
-    Resource.getAsString("org/openoffice/inspector/codegen/template/CPlusPlusProgramStub.tmpl"));
 
-  protected CPlusPlusCodeGenerator()
+  private int       firstUpdatedLine;
+  private Language  language;
+  private String    sourceCode;
+  
+  public CodeUpdateEvent(String sourceCode, Language lang, int firstUpdatedLine)
   {
+    this.firstUpdatedLine = firstUpdatedLine;
+    this.language         = lang;
+    this.sourceCode       = sourceCode;
   }
 
-  public Language getLanguage()
+  public int getFirstUpdatedLine()
   {
-    return Language.CPlusPlus;
+    return firstUpdatedLine;
   }
-  
+
   public String getSourceCode()
   {
-    return tmplProgram.toString();
+    return sourceCode;
   }
 
-  @Override
-  public void addAccessorCodeFor(Object unoObject)
-  {
-    throw new UnsupportedOperationException("Not supported yet.");
-  }
-
-  @Override
-  public void addInvokeCodeFor(XIdlMethod method)
-  {
-
-  }
-  
 }

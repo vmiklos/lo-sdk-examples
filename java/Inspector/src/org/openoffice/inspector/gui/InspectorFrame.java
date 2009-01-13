@@ -88,11 +88,6 @@ public class InspectorFrame extends JFrame
     getTabbedPane().remove(idx);
   }
 
-  public String getIDLPath()
-  {
-    return null; //return this.m_oInspector.getIDLPath();
-  }
-
   public void addInspectorPage(String title, JPanel pane) 
   {
     this.tabbedPane.addTab(title, pane);

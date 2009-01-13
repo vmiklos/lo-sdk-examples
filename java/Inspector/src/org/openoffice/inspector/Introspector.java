@@ -64,7 +64,6 @@ import com.sun.star.reflection.XServiceTypeDescription;
 import com.sun.star.reflection.XTypeDescription;
 import com.sun.star.reflection.XTypeDescriptionEnumeration;
 import com.sun.star.reflection.XTypeDescriptionEnumerationAccess;
-import com.sun.star.script.XInvocation;
 import com.sun.star.ucb.XSimpleFileAccess;
 import com.sun.star.uno.AnyConverter;
 import com.sun.star.uno.Type;
@@ -78,69 +77,69 @@ import java.util.Vector;
 public class Introspector extends WeakBase
 {
 
-  private XIntrospection m_xIntrospection;
-  private XMultiComponentFactory m_xMultiComponentFactory;
-  private XComponentContext m_xComponentContext;
-  private XTypeDescriptionEnumerationAccess m_xTDEnumerationAccess;
+  private static volatile Introspector instance = null;
+  
+  private XIntrospection          xIntrospection;
+  private XMultiComponentFactory  xMultiComponentFactory;
+  private XComponentContext       xComponentContext;
+  private XTypeDescriptionEnumerationAccess xTDEnumerationAccess;
   private static XComponentContext xOfficeComponentContext;
-  private XIdlReflection mxIdlReflection;
+  private XIdlReflection xIdlReflection;
   private URL openHyperlink;
-  private static Introspector m_oIntrospector = null;
   private XSimpleFileAccess xSimpleFileAccess = null;
 
   public static Introspector getIntrospector()
   {
-    if (m_oIntrospector == null)
-    {
-      throw new NullPointerException();
-    }
-    else
-    {
-      return m_oIntrospector;
-    }
+    return instance;
   }
 
-  public static Introspector getIntrospector(XComponentContext _xComponentContext)
+  public static synchronized Introspector getIntrospector(XComponentContext xComponentContext)
   {
-    if (m_oIntrospector == null)
+    if (instance == null)
     {
-      m_oIntrospector = new Introspector(_xComponentContext);
+      Introspector.instance = new Introspector(xComponentContext);
     }
-    return m_oIntrospector;
+    return Introspector.instance;
   }
 
-  /** Creates a new instance of Introspection */
-  private Introspector(XComponentContext _xComponentContext)
+  /** 
+   * Creates a new instance of Introspection.
+   */
+  private Introspector(XComponentContext xComponentContext)
   {
     try
     {
-      m_xComponentContext = _xComponentContext;
-      m_xMultiComponentFactory = m_xComponentContext.getServiceManager();
-      Object o = m_xMultiComponentFactory.createInstanceWithContext("com.sun.star.beans.Introspection", m_xComponentContext);
-      m_xIntrospection = (XIntrospection) UnoRuntime.queryInterface(XIntrospection.class, o);
-      Object oCoreReflection = getXMultiComponentFactory().createInstanceWithContext("com.sun.star.reflection.CoreReflection", getXComponentContext());
-      mxIdlReflection = (XIdlReflection) UnoRuntime.queryInterface(XIdlReflection.class, oCoreReflection);
+      this.xComponentContext      = xComponentContext;
+      this.xMultiComponentFactory = xComponentContext.getServiceManager();
+      Object obj = xMultiComponentFactory.createInstanceWithContext(
+        "com.sun.star.beans.Introspection", xComponentContext);
+      this.xIntrospection = (XIntrospection)
+        UnoRuntime.queryInterface(XIntrospection.class, obj);
+      Object oCoreReflection = getXMultiComponentFactory().
+        createInstanceWithContext("com.sun.star.reflection.CoreReflection", getXComponentContext());
+      this.xIdlReflection = (XIdlReflection)
+        UnoRuntime.queryInterface(XIdlReflection.class, oCoreReflection);
       initTypeDescriptionManager();
     }
     catch (Exception exception)
     {
-      System.err.println(exception);
+      exception.printStackTrace();
     }
   }
 
   public XComponentContext getXComponentContext()
   {
-    return m_xComponentContext;
+    return this.xComponentContext;
   }
 
   protected XMultiComponentFactory getXMultiComponentFactory()
   {
-    return m_xMultiComponentFactory;
+    return this.xMultiComponentFactory;
   }
 
-  public XIntrospectionAccess getXIntrospectionAccess(Object _oUnoComponent)
+  public XIntrospectionAccess getXIntrospectionAccess(Object unoComponent)
   {
-    return m_xIntrospection.inspect(_oUnoComponent);
+    return this.xIntrospection.inspect(unoComponent);
   }
 
   public boolean isContainer(Object _oUnoObject)
@@ -219,11 +218,11 @@ public class Introspector extends WeakBase
     return oRetComponents;
   }
 
-  public XIdlMethod[] getMethodsOfInterface(Type _aType)
+  public XIdlMethod[] getMethodsOfInterface(Type type)
   {
     try
     {
-      XIdlClass xIdlClass = mxIdlReflection.forName(_aType.getTypeName());
+      XIdlClass xIdlClass = this.xIdlReflection.forName(type.getTypeName());
       return xIdlClass.getMethods();
     }
     catch (Exception e)
@@ -233,11 +232,11 @@ public class Introspector extends WeakBase
     }
   }
 
-  public XIdlField[] getFieldsOfType(Type _aType)
+  public XIdlField[] getFieldsOfType(Type type)
   {
     try
     {
-      XIdlClass xIdlClass = mxIdlReflection.forName(_aType.getTypeName());
+      XIdlClass xIdlClass = this.xIdlReflection.forName(type.getTypeName());
       return xIdlClass.getFields();
     }
     catch (Exception e)
@@ -247,9 +246,9 @@ public class Introspector extends WeakBase
     }
   }
 
-  public boolean hasMethods(Object _oUnoObject)
+  public boolean hasMethods(Object unoObject)
   {
-    boolean bHasMethods = (getMethods(_oUnoObject).length > 0);
+    boolean bHasMethods = (getMethods(unoObject).length > 0);
     return bHasMethods;
   }
 
@@ -429,31 +428,34 @@ public class Introspector extends WeakBase
     try
     {
       Object oTypeDescriptionManager = getXComponentContext().getValueByName("/singletons/com.sun.star.reflection.theTypeDescriptionManager");
-      m_xTDEnumerationAccess = (XTypeDescriptionEnumerationAccess) UnoRuntime.queryInterface(XTypeDescriptionEnumerationAccess.class, oTypeDescriptionManager);
+      this.xTDEnumerationAccess = (XTypeDescriptionEnumerationAccess) UnoRuntime.queryInterface(XTypeDescriptionEnumerationAccess.class, oTypeDescriptionManager);
     }
-    catch (java.lang.Exception e)
+    catch (Exception ex)
     {
-      System.out.println(System.out);
+      ex.printStackTrace();
     }
   }
 
   public XTypeDescriptionEnumerationAccess getXTypeDescriptionEnumerationAccess()
   {
-    return m_xTDEnumerationAccess;
+    return this.xTDEnumerationAccess;
   }
 
-  public XConstantTypeDescription[] getFieldsOfConstantGroup(String _sTypeClass)
+  public XConstantTypeDescription[] getFieldsOfConstantGroup(String typeClass)
   {
     XConstantTypeDescription[] xConstantTypeDescriptions = null;
     try
     {
       TypeClass[] eTypeClasses = new com.sun.star.uno.TypeClass[1];
       eTypeClasses[0] = com.sun.star.uno.TypeClass.CONSTANTS;
-      XTypeDescriptionEnumeration xTDEnumeration = m_xTDEnumerationAccess.createTypeDescriptionEnumeration(getModuleName(_sTypeClass), eTypeClasses, TypeDescriptionSearchDepth.INFINITE);
+      XTypeDescriptionEnumeration xTDEnumeration = 
+        this.xTDEnumerationAccess.createTypeDescriptionEnumeration(
+          getModuleName(typeClass), 
+          eTypeClasses, TypeDescriptionSearchDepth.INFINITE);
       while (xTDEnumeration.hasMoreElements())
       {
         XTypeDescription xTD = xTDEnumeration.nextTypeDescription();
-        if (xTD.getName().equals(_sTypeClass))
+        if (xTD.getName().equals(typeClass))
         {
           XConstantsTypeDescription xConstantsTypeDescription = (XConstantsTypeDescription) UnoRuntime.queryInterface(XConstantsTypeDescription.class, xTD);
           xConstantTypeDescriptions = xConstantsTypeDescription.getConstants();
@@ -521,7 +523,9 @@ public class Introspector extends WeakBase
     XTypeDescription xTypeDescription = null;
     try
     {
-      XHierarchicalNameAccess xHierarchicalNameAccess = (XHierarchicalNameAccess) UnoRuntime.queryInterface(XHierarchicalNameAccess.class, m_xTDEnumerationAccess);
+      XHierarchicalNameAccess xHierarchicalNameAccess = 
+        (XHierarchicalNameAccess) UnoRuntime.queryInterface(
+          XHierarchicalNameAccess.class, this.xTDEnumerationAccess);
       if (xHierarchicalNameAccess != null)
       {
         if (xHierarchicalNameAccess.hasByHierarchicalName(_sTypeName))
@@ -651,30 +655,9 @@ public class Introspector extends WeakBase
     return _sDisplayString;
   }
 
-  public static boolean isValid(Object[] _oObject)
+  public static boolean isArray(Object obj)
   {
-    if (_oObject != null)
-    {
-      if (_oObject.length > 0)
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public static boolean isValid(Object _oObject)
-  {
-    if (_oObject != null)
-    {
-      return (!AnyConverter.isVoid(_oObject));
-    }
-    return false;
-  }
-
-  public static boolean isArray(Object _oObject)
-  {
-    return _oObject.getClass().isArray();
+    return obj.getClass().isArray();
   }
 
   public boolean hasSupportedServices(Object _oUnoObject)
@@ -728,52 +711,6 @@ public class Introspector extends WeakBase
       default:
     }
     return oReturn;
-  }
-
-  public XSimpleFileAccess getXSimpleFileAccess()
-  {
-    try
-    {
-      if (xSimpleFileAccess == null)
-      {
-        Object oSimpleFileAccess = m_xComponentContext.getServiceManager().createInstanceWithContext("com.sun.star.ucb.SimpleFileAccess", m_xComponentContext);
-        xSimpleFileAccess = (XSimpleFileAccess) com.sun.star.uno.UnoRuntime.queryInterface(XSimpleFileAccess.class, oSimpleFileAccess);
-      }
-      return xSimpleFileAccess;
-    }
-    catch (com.sun.star.uno.Exception ex)
-    {
-      ex.printStackTrace(System.out);
-      return null;
-    }
-  }
-
-  /*public boolean isValidSDKInstallationPath(String _sSDKInstallationPath)
-  {
-    boolean bIsValid = false;
-    try
-    {
-      String sIDLFolder = Introspector.addToPath(_sSDKInstallationPath, Inspector.sIDLDOCUMENTSUBFOLDER);
-      String sIndexFile = Introspector.addToPath(_sSDKInstallationPath, "index.html");
-      if (getXSimpleFileAccess() != null)
-      {
-        bIsValid = (getXSimpleFileAccess().exists(sIDLFolder) && getXSimpleFileAccess().exists(sIndexFile));
-      }
-    }
-    catch (com.sun.star.uno.Exception ex)
-    {
-      ex.printStackTrace(System.out);
-    }
-    return bIsValid;
-  }
-*/
-  public static String addToPath(String _sPath, String _sSubPath)
-  {
-    if (!_sPath.endsWith("/"))
-    {
-      _sPath += "/";
-    }
-    return _sPath + _sSubPath;
   }
 
 }

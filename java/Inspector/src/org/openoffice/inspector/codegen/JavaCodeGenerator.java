@@ -34,14 +34,15 @@
 
 package org.openoffice.inspector.codegen;
 
-import com.sun.star.beans.Pair;
 import com.sun.star.reflection.XIdlMethod;
+import com.sun.star.script.XInvocation;
 import java.util.ArrayList;
 import java.util.List;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
 /**
+ * Generator for Java code.
  * @author Christian Lins (cli@openoffice.org)
  */
 public class JavaCodeGenerator 
@@ -50,7 +51,7 @@ public class JavaCodeGenerator
   
   private List<Class<?>> queryInterfaces = new ArrayList<Class<?>>();
   
-  private List<Pair<Object, XIdlMethod>> invokeMethods = new ArrayList<Pair<Object, XIdlMethod>>();
+  private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
   
   private StringTemplate tmplInvoke = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/JavaInvoke.tmpl"));
@@ -70,6 +71,9 @@ public class JavaCodeGenerator
 
   public String getSourceCode()
   {
+    if(!codeUpdateRequired)
+      return sourceCode;
+    
     StringBuffer imports  = new StringBuffer();
     StringBuffer code     = new StringBuffer();
     
@@ -78,6 +82,7 @@ public class JavaCodeGenerator
     {
       tmplQueryInterface.set("interface", iface.getSimpleName());
       tmplQueryInterface.set("variable", "myVar");
+      tmplQueryInterface.set("unoobject", "xContext"); // or xDocModel
       code.append(tmplQueryInterface.toString());
       
       // Add import
@@ -87,15 +92,19 @@ public class JavaCodeGenerator
     }
     
     // Invoke all methods
-    for(Pair<Object, XIdlMethod> p : this.invokeMethods)
+    for(XIdlMethod method : this.invokeMethods)
     {
-      
+      tmplInvoke.set("methodname", method.getName());
+
+      code.append(tmplInvoke.toString());
+      code.append('\n');
     }
     
     tmplProgram.set("imports", imports.toString());
     tmplProgram.set("code", code.toString());
     
-    return tmplProgram.toString();
+    sourceCode = tmplProgram.toString();
+    return sourceCode;
   }
   
   public Language getLanguage()
@@ -114,7 +123,10 @@ public class JavaCodeGenerator
   @Override
   public void addAccessorCodeFor(Object unoObject)
   {
+    codeUpdateRequired = true;
     
+    CodeUpdateEvent event = new CodeUpdateEvent(getSourceCode(), Language.Java, 0);
+    fireCodeUpdateEvent(event);
   }
 
   /**
@@ -124,9 +136,18 @@ public class JavaCodeGenerator
    * @param method
    */
   @Override
-  public void addInvokeCodeFor(Object unoObject, XIdlMethod method)
+  public void addInvokeCodeFor(XIdlMethod method)
   {
-    this.invokeMethods.add(new Pair<Object, XIdlMethod>(unoObject, method));
+    codeUpdateRequired = true;
+    
+    CodeUpdateEvent event = new CodeUpdateEvent(getSourceCode(), Language.Java, 0);
+    fireCodeUpdateEvent(event);
+    
+    // Add method for invoke code generation
+    this.invokeMethods.add(method);
+    
+    // Make sure that the program queries a XInvocation interface
+    this.queryInterfaces.add(XInvocation.class);
   }
 
 }

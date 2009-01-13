@@ -41,6 +41,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import org.openoffice.inspector.Inspector;
+import org.openoffice.inspector.codegen.CodeGenerator;
 import org.openoffice.inspector.model.SwingUnoMethodNode;
 import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.model.UnoMethodNode;
@@ -115,8 +116,24 @@ public class NodeContextMenu
       {
         if(swingNode instanceof SwingUnoMethodNode)
         {
-          // Create code for invoking this method
-          
+          try
+          {
+            // Create code for invoking this method
+            Object obj = node.getUnoObject();
+            CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
+            for(CodeGenerator codeGen : codeGens)
+            {
+              if(codeGen != null)
+              {
+                codeGen.addInvokeCodeFor(
+                  ((SwingUnoMethodNode)swingNode).getXIdlMethod());
+              }
+            }
+          }
+          catch(Exception ex)
+          {
+            ex.printStackTrace();
+          }
         }
         else
         {

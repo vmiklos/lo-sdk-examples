@@ -53,11 +53,9 @@ public class InspectorPane
   private Property[] properties;
   private boolean includeContent = false;
   private XComponentContext xComponentContext;
-  //private InspectorFrame      inspectorFrame;
   private Introspector introspector = null;
-  //private CodeGenerator sourceCodeGenerator;
   private InspectionTree inspectionTreeComponent;
-  private CodePane       codePane   = new CodePane();
+  private CodePane       codePane   = null;
   private FilterPane     filterPane = null;
   private String sTitle = "";
 
@@ -68,6 +66,7 @@ public class InspectorPane
     throws InstantiationException, IllegalAccessException
   {
     this.filterPane              = new FilterPane((UnoTreeModel)tree.getModel());
+    this.codePane                = new CodePane((UnoTreeModel)tree.getModel());
     this.inspectionTreeComponent = tree;
 
     setLayout(new BorderLayout());

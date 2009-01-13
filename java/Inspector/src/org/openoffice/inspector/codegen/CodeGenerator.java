@@ -35,7 +35,9 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class CodeGenerator
@@ -43,8 +45,8 @@ public abstract class CodeGenerator
   
   private static Map<Language, Class<?>> CodeGenerators 
     = new HashMap<Language, Class<?>>();
-  private static Map<Object, CodeGenerator> CodeGenCache
-    = new HashMap<Object, CodeGenerator>();
+  private static Map<Object, CodeGenerator[]> CodeGenCache
+    = new HashMap<Object, CodeGenerator[]>();
   
   static
   {
@@ -52,7 +54,7 @@ public abstract class CodeGenerator
     CodeGenerators.put(Language.Java, JavaCodeGenerator.class);
     CodeGenerators.put(Language.StarBasic, BasicCodeGenerator.class);
   }
-  
+    
   /**
    * Deletes the CodeGenerator instance of the given UNO object.
    * This method is used to reset the code generation of a specific
@@ -64,8 +66,18 @@ public abstract class CodeGenerator
     CodeGenCache.remove(obj);
   }
   
-  public static CodeGenerator getInstance(Object obj)
+  /**
+   * @param obj
+   * @return An array of CodeGenerators. Some array entries can be null.
+   * @throws java.lang.IllegalAccessException
+   * @throws java.lang.InstantiationException
+   */
+  public static CodeGenerator[] getInstances(Object obj)
+    throws IllegalAccessException, InstantiationException
   {
+    if(!CodeGenCache.containsKey(obj))
+      getInstance(null, obj);
+      
     return CodeGenCache.get(obj);
   }
   
@@ -77,41 +89,78 @@ public abstract class CodeGenerator
    * instance is returned until it is manually resetted using deleteInstanceOf().
    * @param lang
    * @param rootObject
-   * @return
+   * @return CodeGenerator associated with given Language and Object. Can
+   *         be null.
    * @throws java.lang.InstantiationException
    * @throws java.lang.IllegalAccessException
    */
   public static CodeGenerator getInstance(Language lang, Object rootObject)
     throws InstantiationException, IllegalAccessException
   {
-    Class<?> clazz = CodeGenerators.get(lang);
-    if(clazz != null)
+    CodeGenerator[] codeGens = CodeGenCache.get(rootObject);
+    if (codeGens == null)
     {
-      CodeGenerator codeGen = CodeGenCache.get(rootObject);
-      if(codeGen == null || codeGen.getLanguage() != lang)
+      Language[] langs = Language.values();
+      codeGens = new CodeGenerator[langs.length];
+      for (int n = 0; n < langs.length; n++)
       {
-        codeGen = (CodeGenerator)clazz.newInstance();
-        codeGen.setRootObject(rootObject);
-        CodeGenCache.put(rootObject, codeGen);
+        Class<?> clazz = CodeGenerators.get(langs[n]);
+        if(clazz != null)
+        {
+          codeGens[n] = (CodeGenerator)clazz.newInstance();
+          codeGens[n].setRootObject(rootObject);
+        }
       }
-      return codeGen;
+      CodeGenCache.put(rootObject, codeGens);
     }
-    else
+
+    for (CodeGenerator codeGen : codeGens)
     {
-      System.err.println("No CodeGenerator for language " + lang + " found!");
-      return null;
+      if(codeGen != null && codeGen.getLanguage().equals(lang))
+        return codeGen;
     }
+
+    // else
+    System.err.println("No CodeGenerator for language " + lang + " found!");
+    return null;
   }
+  
+  private List<CodeUpdateListener> codeUpdateListeners = new ArrayList<CodeUpdateListener>();
+  
+  /** This variable indicates if the source code needs to be regenerated */
+  protected volatile boolean codeUpdateRequired = true;
   
   /** Root UNO object for which code is created */
   protected Object rootObject = null;
+  
+  /** The last created source code of this generator */
+  protected String sourceCode = null;
 
   protected CodeGenerator()
   {
   }
   
+  public void addCodeUpdateListener(CodeUpdateListener listener)
+  {
+    this.codeUpdateListeners.add(listener);
+    System.out.println(listener + " registered as CodeUpdateListener");
+  }
+  
+  public void removeCodeUpdateListener(CodeUpdateListener listener)
+  {
+    this.codeUpdateListeners.remove(listener);
+  }
+  
+  protected void fireCodeUpdateEvent(CodeUpdateEvent event)
+  {
+    for(CodeUpdateListener listener : this.codeUpdateListeners)
+    {
+      listener.codeUpdated(event);
+    }
+  }
+  
   public abstract void addAccessorCodeFor(Object unoObject);
-  public abstract void addInvokeCodeFor(Object unoObject, XIdlMethod method);
+  public abstract void addInvokeCodeFor(XIdlMethod method);
   
   public abstract Language  getLanguage();
   public abstract String    getSourceCode();
