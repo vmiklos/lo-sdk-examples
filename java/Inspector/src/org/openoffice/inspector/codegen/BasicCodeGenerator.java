@@ -35,6 +35,7 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
+import com.sun.star.uno.Type;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -69,6 +70,12 @@ public class BasicCodeGenerator
   public void addInvokeCodeFor(XIdlMethod method)
   {
 
+  }
+  
+  @Override
+  public void addQueryCodeFor(String iface)
+  {
+    
   }
 
 }

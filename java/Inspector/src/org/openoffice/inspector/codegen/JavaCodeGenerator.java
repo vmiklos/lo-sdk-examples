@@ -37,7 +37,9 @@ package org.openoffice.inspector.codegen;
 import com.sun.star.reflection.XIdlMethod;
 import com.sun.star.script.XInvocation;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -49,7 +51,7 @@ public class JavaCodeGenerator
   extends CodeGenerator 
 {
   
-  private List<Class<?>> queryInterfaces = new ArrayList<Class<?>>();
+  private Set<String> queryInterfaces = new HashSet<String>();
   
   private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
   
@@ -61,6 +63,8 @@ public class JavaCodeGenerator
 
   private StringTemplate tmplQueryInterface = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/JavaQueryInterface.tmpl"));
+  
+  private int lastChangedLine = 0;
   
   /**
    * This constructor is protected agains direct instantiation.
@@ -78,16 +82,16 @@ public class JavaCodeGenerator
     StringBuffer code     = new StringBuffer();
     
     // Query all interfaces
-    for(Class<?> iface : queryInterfaces)
+    for(String iface : queryInterfaces)
     {
-      tmplQueryInterface.set("interface", iface.getSimpleName());
+      tmplQueryInterface.set("interface", iface);
       tmplQueryInterface.set("variable", "myVar");
       tmplQueryInterface.set("unoobject", "xContext"); // or xDocModel
       code.append(tmplQueryInterface.toString());
       
       // Add import
       imports.append("import ");
-      imports.append(iface.getName());
+      imports.append(iface);
       imports.append(";\n");
     }
     
@@ -103,7 +107,9 @@ public class JavaCodeGenerator
     tmplProgram.set("imports", imports.toString());
     tmplProgram.set("code", code.toString());
     
-    sourceCode = tmplProgram.toString();
+    String newSourceCode = tmplProgram.toString();
+    this.lastChangedLine = firstDifferentLine(sourceCode, newSourceCode);
+    this.sourceCode      = newSourceCode;
     return sourceCode;
   }
   
@@ -117,15 +123,16 @@ public class JavaCodeGenerator
   {
     super.setRootObject(obj);
     
-    this.queryInterfaces.add(obj.getClass());
+    if(!this.queryInterfaces.contains(obj.getClass()))
+      this.queryInterfaces.add(obj.getClass().getName());
   }
 
   @Override
   public void addAccessorCodeFor(Object unoObject)
   {
     codeUpdateRequired = true;
-    
-    CodeUpdateEvent event = new CodeUpdateEvent(getSourceCode(), Language.Java, 0);
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.Java, this.lastChangedLine);
     fireCodeUpdateEvent(event);
   }
 
@@ -138,16 +145,30 @@ public class JavaCodeGenerator
   @Override
   public void addInvokeCodeFor(XIdlMethod method)
   {
-    codeUpdateRequired = true;
-    
-    CodeUpdateEvent event = new CodeUpdateEvent(getSourceCode(), Language.Java, 0);
-    fireCodeUpdateEvent(event);
-    
     // Add method for invoke code generation
     this.invokeMethods.add(method);
     
     // Make sure that the program queries a XInvocation interface
-    this.queryInterfaces.add(XInvocation.class);
+    if(!this.queryInterfaces.contains(XInvocation.class.getName()))
+      this.queryInterfaces.add(XInvocation.class.getName());
+    
+    // Force the code regeneration and send update event
+    codeUpdateRequired = true;
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.Java, this.lastChangedLine);
+    fireCodeUpdateEvent(event);
+  }
+  
+  @Override
+  public void addQueryCodeFor(String iface)
+  {
+    if(!queryInterfaces.contains(iface))
+      this.queryInterfaces.add(iface);
+
+    codeUpdateRequired = true;
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.Java, this.lastChangedLine);
+    fireCodeUpdateEvent(event);
   }
 
 }

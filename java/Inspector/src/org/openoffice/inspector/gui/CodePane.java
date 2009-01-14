@@ -38,10 +38,13 @@ import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.text.DefaultEditorKit;
+import jsyntaxpane.DefaultSyntaxKit;
+import jsyntaxpane.syntaxkits.JavaSyntaxKit;
 import org.openoffice.inspector.codegen.CodeGenerator;
 import org.openoffice.inspector.codegen.CodeUpdateEvent;
 import org.openoffice.inspector.codegen.CodeUpdateListener;
-import org.openoffice.inspector.codegen.Language;
 import org.openoffice.inspector.model.UnoTreeModel;
 
 /**
@@ -54,19 +57,25 @@ public class CodePane
   implements CodeUpdateListener
 {
   
-  private JEditorPane  code      = new JEditorPane();
+  private JEditorPane  code      = null;
   private UnoTreeModel treeModel = null;
   
   public CodePane(UnoTreeModel model)
   {
-    this.treeModel = model;
-    this.code.setEditable(false);
-    this.code.setContentType("text/java");
-    this.code.setComponentPopupMenu(new CodeContextMenu(this));
+    DefaultSyntaxKit.initKit();
     
+    this.treeModel = model;
+    this.code = new JEditorPane();
     setLayout(new BorderLayout());
     add(new JLabel("Generated Codefragment:"), BorderLayout.NORTH);
-    add(this.code, BorderLayout.CENTER);
+    add(new JScrollPane(this.code), BorderLayout.CENTER);
+    
+    this.code.setEditable(false);
+    this.code.setFont(new java.awt.Font("Monospaced", 0, 13));
+    this.code.setEditorKit(new JavaSyntaxKit());
+    //this.code.setContentType("text/java");
+    this.code.setComponentPopupMenu(new CodeContextMenu(this));
+    System.out.println(this.code.getEditorKit());
     
     // Register at CodeGenerators
     try
@@ -92,7 +101,14 @@ public class CodePane
    */
   public void codeUpdated(CodeUpdateEvent event)
   {
+    // Update code
     setCode(event.getSourceCode());
+    
+    // Scroll to last changed line
+    int caret = 0;
+    while(caret < event.getFirstUpdatedLine() && caret >= 0)
+      caret = event.getSourceCode().indexOf("\n", caret + 1);
+    this.code.select(caret, 10);
   }
   
   public String getCode()

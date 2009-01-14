@@ -42,8 +42,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import org.openoffice.inspector.Inspector;
 import org.openoffice.inspector.codegen.CodeGenerator;
+import org.openoffice.inspector.model.HideableMutableTreeNode;
+import org.openoffice.inspector.model.SwingUnoInterfaceNode;
 import org.openoffice.inspector.model.SwingUnoMethodNode;
 import org.openoffice.inspector.model.SwingUnoNode;
+import org.openoffice.inspector.model.UnoInterfaceNode;
 import org.openoffice.inspector.model.UnoMethodNode;
 
 /**
@@ -56,7 +59,8 @@ public class NodeContextMenu
   
   private JMenu         mnuCode        = new JMenu("Generate Code");
   private JMenuItem     mnuCodeInvoke  = new JMenuItem("Invoke");
-  private JMenuItem     mnuCodeAccess  = new JMenuItem("Accessors");
+  private JMenuItem     mnuCodeQuery   = new JMenuItem("Query");
+  private JMenuItem     mnuCodeValue   = new JMenuItem("Get value");
   private JMenuItem     mnuInspectNode = new JMenuItem("Inspect");
   private JMenuItem     mnuInvokeNode  = new JMenuItem("Invoke...");
   private SwingUnoNode  node;
@@ -76,7 +80,8 @@ public class NodeContextMenu
     
     add(this.mnuCode);
     this.mnuCode.add(this.mnuCodeInvoke);
-    this.mnuCode.add(this.mnuCodeAccess);
+    this.mnuCode.add(this.mnuCodeValue);
+    this.mnuCode.add(this.mnuCodeQuery);
     
     this.mnuInspectNode.addActionListener(new ActionListener() 
     {
@@ -98,7 +103,7 @@ public class NodeContextMenu
       }
     });
     
-    this.mnuCodeAccess.addActionListener(new ActionListener() 
+    this.mnuCodeValue.addActionListener(new ActionListener() 
     {
       public void actionPerformed(ActionEvent event)
       {
@@ -106,6 +111,34 @@ public class NodeContextMenu
         {
           String[] msg = {"You cannot access a method in that way, sorry..."};
           JOptionPane.showMessageDialog(InspectorFrame.getInstance(), msg);
+        }
+      }
+    });
+    
+    this.mnuCodeQuery.addActionListener(new ActionListener() 
+    {
+      public void actionPerformed(ActionEvent event)
+      {
+        if(swingNode instanceof SwingUnoInterfaceNode)
+        {
+          try
+          {
+            // Create code for invoking this method
+            Object obj = ((HideableMutableTreeNode)node.getRoot()).getUserObject();
+            CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
+            for(CodeGenerator codeGen : codeGens)
+            {
+              if(codeGen != null)
+              {
+                codeGen.addQueryCodeFor(
+                  ((UnoInterfaceNode)swingNode.getUnoNode()).getType().getTypeName());
+              }
+            }
+          }
+          catch(Exception ex)
+          {
+            ex.printStackTrace();
+          }
         }
       }
     });
@@ -119,7 +152,7 @@ public class NodeContextMenu
           try
           {
             // Create code for invoking this method
-            Object obj = node.getUnoObject();
+            Object obj = ((HideableMutableTreeNode)node.getRoot()).getUserObject();
             CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
             for(CodeGenerator codeGen : codeGens)
             {

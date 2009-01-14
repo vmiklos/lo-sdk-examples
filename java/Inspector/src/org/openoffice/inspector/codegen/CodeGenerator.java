@@ -35,6 +35,10 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
+import com.sun.star.uno.Type;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +47,9 @@ import java.util.Map;
 public abstract class CodeGenerator
 {
   
-  private static Map<Language, Class<?>> CodeGenerators 
+  private static volatile Map<Language, Class<?>> CodeGenerators 
     = new HashMap<Language, Class<?>>();
-  private static Map<Object, CodeGenerator[]> CodeGenCache
+  private static volatile Map<Object, CodeGenerator[]> CodeGenCache
     = new HashMap<Object, CodeGenerator[]>();
   
   static
@@ -94,7 +98,7 @@ public abstract class CodeGenerator
    * @throws java.lang.InstantiationException
    * @throws java.lang.IllegalAccessException
    */
-  public static CodeGenerator getInstance(Language lang, Object rootObject)
+  public static synchronized CodeGenerator getInstance(Language lang, Object rootObject)
     throws InstantiationException, IllegalAccessException
   {
     CodeGenerator[] codeGens = CodeGenCache.get(rootObject);
@@ -125,6 +129,42 @@ public abstract class CodeGenerator
     return null;
   }
   
+  /**
+   * Returns the line number of the first different line in the two
+   * strings or 0 if there is no difference.
+   * @param strA
+   * @param strB
+   * @return
+   */
+  protected static int firstDifferentLine(String strA, String strB)
+  {
+    try
+    {
+      LineNumberReader readerA = new LineNumberReader(new StringReader(strA));
+      LineNumberReader readerB = new LineNumberReader(new StringReader(strB));
+
+      String lineA = readerA.readLine();
+      String lineB = readerB.readLine();
+
+      while(lineA != null && lineB != null)
+      {
+        if(!lineA.equals(lineB))
+          return readerA.getLineNumber();
+
+        lineA = readerA.readLine();
+        lineB = readerB.readLine();
+      }
+
+      return readerA.getLineNumber();
+    }
+    catch(IOException ex)
+    {
+      // Probably never thrown as we read from strings not files
+      ex.printStackTrace();
+      return 0;
+    }
+  }
+  
   private List<CodeUpdateListener> codeUpdateListeners = new ArrayList<CodeUpdateListener>();
   
   /** This variable indicates if the source code needs to be regenerated */
@@ -134,7 +174,7 @@ public abstract class CodeGenerator
   protected Object rootObject = null;
   
   /** The last created source code of this generator */
-  protected String sourceCode = null;
+  protected String sourceCode = new String();
 
   protected CodeGenerator()
   {
@@ -161,6 +201,7 @@ public abstract class CodeGenerator
   
   public abstract void addAccessorCodeFor(Object unoObject);
   public abstract void addInvokeCodeFor(XIdlMethod method);
+  public abstract void addQueryCodeFor(String iface);
   
   public abstract Language  getLanguage();
   public abstract String    getSourceCode();
