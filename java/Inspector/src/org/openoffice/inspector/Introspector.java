@@ -277,11 +277,11 @@ public class Introspector extends WeakBase
     return bHasProperties;
   }
 
-  public Property[] getProperties(Object _oUnoParentObject)
+  public Property[] getProperties(Object unoParentObject)
   {
     try
     {
-      XIntrospectionAccess xIntrospectionAccess = getXIntrospectionAccess(_oUnoParentObject);
+      XIntrospectionAccess xIntrospectionAccess = getXIntrospectionAccess(unoParentObject);
       if (xIntrospectionAccess != null)
       {
         Property[] aProperties = xIntrospectionAccess.getProperties(com.sun.star.beans.PropertyConcept.ATTRIBUTES + com.sun.star.beans.PropertyConcept.PROPERTYSET);

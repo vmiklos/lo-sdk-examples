@@ -43,6 +43,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class SwingUnoInterfaceNode extends SwingUnoNode
 {
+
   public SwingUnoInterfaceNode(UnoInterfaceNode node)
   {
     super(node);
@@ -68,4 +69,5 @@ public class SwingUnoInterfaceNode extends SwingUnoNode
     
     add(methodsNode);
   }
+
 }

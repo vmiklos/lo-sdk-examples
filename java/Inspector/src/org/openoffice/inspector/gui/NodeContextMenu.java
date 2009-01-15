@@ -46,8 +46,10 @@ import org.openoffice.inspector.model.HideableMutableTreeNode;
 import org.openoffice.inspector.model.SwingUnoInterfaceNode;
 import org.openoffice.inspector.model.SwingUnoMethodNode;
 import org.openoffice.inspector.model.SwingUnoNode;
+import org.openoffice.inspector.model.SwingUnoPropertyNode;
 import org.openoffice.inspector.model.UnoInterfaceNode;
 import org.openoffice.inspector.model.UnoMethodNode;
+import org.openoffice.inspector.model.UnoNode;
 
 /**
  * Context menu for all tree nodes.
@@ -112,6 +114,16 @@ public class NodeContextMenu
           String[] msg = {"You cannot access a method in that way, sorry..."};
           JOptionPane.showMessageDialog(InspectorFrame.getInstance(), msg);
         }
+        else if(swingNode instanceof SwingUnoPropertyNode)
+        {
+          Object obj = ((UnoNode)((HideableMutableTreeNode)node.getRoot())
+            .getUserObject()).getUnoObject();
+        }
+        else
+        {
+          String[] msg = {"You cannot access this node in that way, sorry..."};
+          JOptionPane.showMessageDialog(InspectorFrame.getInstance(), msg);
+        }
       }
     });
     
@@ -124,14 +136,15 @@ public class NodeContextMenu
           try
           {
             // Create code for invoking this method
-            Object obj = ((HideableMutableTreeNode)node.getRoot()).getUserObject();
+            Object obj = ((UnoNode)((HideableMutableTreeNode)node.getRoot())
+              .getUserObject()).getUnoObject();
             CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
             for(CodeGenerator codeGen : codeGens)
             {
               if(codeGen != null)
               {
                 codeGen.addQueryCodeFor(
-                  ((UnoInterfaceNode)swingNode.getUnoNode()).getType().getTypeName());
+                  swingNode.getUnoNode().getNodeDescription());
               }
             }
           }
@@ -139,6 +152,11 @@ public class NodeContextMenu
           {
             ex.printStackTrace();
           }
+        }
+        else
+        {
+          String[] msg = {"You cannot query this!"};
+          JOptionPane.showMessageDialog(InspectorFrame.getInstance(), msg);
         }
       }
     });
@@ -152,7 +170,8 @@ public class NodeContextMenu
           try
           {
             // Create code for invoking this method
-            Object obj = ((HideableMutableTreeNode)node.getRoot()).getUserObject();
+            Object obj = ((UnoNode)((HideableMutableTreeNode)node.getRoot())
+              .getUserObject()).getUnoObject();
             CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
             for(CodeGenerator codeGen : codeGens)
             {

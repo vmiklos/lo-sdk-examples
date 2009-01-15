@@ -38,7 +38,7 @@ import com.sun.star.beans.Property;
 import org.openoffice.inspector.Introspector;
 
 /**
- * 
+ * Swing node capsulating an UnoPropertyNode.
  * @author Christian Lins (cli@openoffice.org)
  */
 public class SwingUnoPropertyNode 

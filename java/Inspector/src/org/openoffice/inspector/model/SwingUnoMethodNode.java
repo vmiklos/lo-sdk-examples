@@ -59,24 +59,6 @@ public class SwingUnoMethodNode
     return getUnoNode().getNodeDescription().toLowerCase().contains(filter);
   }
 
-  @Override
-  public String getName()
-  {
-    return ((UnoMethodNode)getUnoNode()).getName();
-  }
-
-  @Override
-  public String getClassName()
-  {
-    String sClassName = "";
-    sClassName = getXIdlMethod().getDeclaringClass().getName();
-    if (sClassName.equals(""))
-    {
-      sClassName = super.getClassName();
-    }
-    return sClassName;
-  }
-
   public TypeClass getTypeClass()
   {
     return ((UnoMethodNode)getUnoNode()).getTypeClass();

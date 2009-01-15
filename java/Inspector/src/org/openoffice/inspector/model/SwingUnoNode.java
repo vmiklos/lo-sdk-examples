@@ -120,27 +120,4 @@ public class SwingUnoNode
     return (UnoNode)getUserObject();
   }
 
-  public String getClassName()
-  {
-    String sClassName = ((UnoNode)getUserObject()).getClassName();
-    if (sClassName.equals(""))
-    {
-      TreeNode oTreeNode = getParent();
-      if (oTreeNode != null)
-      {
-        if (oTreeNode instanceof SwingUnoNode)
-        {
-          SwingUnoNode oUnoNode = (SwingUnoNode) oTreeNode;
-          sClassName = oUnoNode.getClassName();
-        }
-      }
-    }
-    return sClassName;
-  }
-
-  public String getName()
-  {
-    return getClassName();
-  }
-
 }

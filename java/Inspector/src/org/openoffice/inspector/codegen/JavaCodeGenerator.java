@@ -84,8 +84,12 @@ public class JavaCodeGenerator
     // Query all interfaces
     for(String iface : queryInterfaces)
     {
-      tmplQueryInterface.set("interface", iface);
-      tmplQueryInterface.set("variable", "myVar");
+      String iface_short = iface.substring(iface.lastIndexOf(".") + 1);
+      String iface_var   = iface_short
+        .replaceFirst(iface_short.substring(0, 1), 
+                      iface_short.substring(0, 1).toLowerCase());
+      tmplQueryInterface.set("interface", iface_short);
+      tmplQueryInterface.set("variable", iface_var);
       tmplQueryInterface.set("unoobject", "xContext"); // or xDocModel
       code.append(tmplQueryInterface.toString());
       
@@ -99,6 +103,7 @@ public class JavaCodeGenerator
     for(XIdlMethod method : this.invokeMethods)
     {
       tmplInvoke.set("methodname", method.getName());
+      tmplInvoke.set("inoutparams", generateInOutParamsFor(method));
 
       code.append(tmplInvoke.toString());
       code.append('\n');
@@ -113,6 +118,23 @@ public class JavaCodeGenerator
     return sourceCode;
   }
   
+  /**
+   * Generates a Java code fragment for an in/out parameter
+   * declaration specific for a method invocation.
+   * @param method
+   * @return
+   */
+  private String generateInOutParamsFor(XIdlMethod method)
+  {
+    StringBuffer buf = new StringBuffer();
+    
+    buf.append("new Object[1][");
+    buf.append(method.getParameterInfos().length);
+    buf.append("]");
+    
+    return buf.toString();
+  }
+  
   public Language getLanguage()
   {
     return Language.Java;
@@ -123,8 +145,9 @@ public class JavaCodeGenerator
   {
     super.setRootObject(obj);
     
-    if(!this.queryInterfaces.contains(obj.getClass()))
-      this.queryInterfaces.add(obj.getClass().getName());
+    // What do we need here?
+    //if(!this.queryInterfaces.contains(obj.getClass()))
+    //  this.queryInterfaces.add(obj.getClass().getName());
   }
 
   @Override
@@ -149,8 +172,7 @@ public class JavaCodeGenerator
     this.invokeMethods.add(method);
     
     // Make sure that the program queries a XInvocation interface
-    if(!this.queryInterfaces.contains(XInvocation.class.getName()))
-      this.queryInterfaces.add(XInvocation.class.getName());
+    addQueryCodeFor(XInvocation.class.getName());
     
     // Force the code regeneration and send update event
     codeUpdateRequired = true;

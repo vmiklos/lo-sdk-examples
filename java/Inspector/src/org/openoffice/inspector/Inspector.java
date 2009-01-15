@@ -70,6 +70,7 @@ import org.openoffice.inspector.codegen.Language;
 import org.openoffice.inspector.gui.InspectorFrame;
 import org.openoffice.inspector.model.UnoTreeModel;
 import org.openoffice.inspector.model.SwingUnoNode;
+import org.openoffice.inspector.model.UnoNode;
 
 /** 
  * The purpose of this class is to provide a factory for creating the service

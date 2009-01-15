@@ -35,7 +35,6 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
-import com.sun.star.uno.Type;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;

@@ -73,9 +73,13 @@ public class UnoTreeModel
     this.inspectionTree.expandPath(new TreePath(node.getPath()));
   }
   
+  /**
+   * @return Root UNO object
+   */
   public Object getUnoRoot()
   {
-    return ((HideableMutableTreeNode)getRoot()).getUserObject();
+    UnoNode rootCapsulate = (UnoNode)((HideableMutableTreeNode)getRoot()).getUserObject();
+    return rootCapsulate.getUnoObject();
   }
   
   public void setFilter(String filter)

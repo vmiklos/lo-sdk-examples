@@ -79,12 +79,6 @@ public class UnoMethodNode extends UnoNode
     return xIdlMethod;
   }
 
-  @Override
-  public String getAnchor()
-  {
-    return getXIdlMethod().getName();
-  }
-
   public String getName()
   {
     return getXIdlMethod().getName();
