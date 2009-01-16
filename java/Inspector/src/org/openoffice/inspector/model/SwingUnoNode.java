@@ -36,7 +36,6 @@ package org.openoffice.inspector.model;
 
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 /**
  * Root node of the tree.

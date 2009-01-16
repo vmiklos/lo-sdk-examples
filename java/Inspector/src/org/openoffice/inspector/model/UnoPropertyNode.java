@@ -43,58 +43,33 @@ import org.openoffice.inspector.Introspector;
 
 public class UnoPropertyNode extends UnoNode
 {
+  
+  private Property      property;
+  private PropertyValue propertyValue;
+  private Object        unoReturnObject;
+  private String        label = "";
 
-  Property aProperty;
-  PropertyValue aPropertyValue;
-  String m_sPropertyName;
-  Object m_oUnoReturnObject;
-  private int m_nPropertyType = 0; // XUnoPropertyNode.nDEFAULT;
-  private String sLabel = "";
-  private static XConstantTypeDescription[] xPropertyAttributesTypeDescriptions = null;
-
-  /** Creates a new instance of UnoMethodNode */
-  public UnoPropertyNode(Property property, Object unoObject/*, Object _oUnoReturnObject*/)
+  /** Creates a new instance of UnoPropertyNode */
+  public UnoPropertyNode(Property property, Object unoObject)
   {
     super(unoObject);
-    this.aProperty  = property;
-    m_sPropertyName = property.Name;
-    //m_oUnoReturnObject = _oUnoReturnObject;
+    this.property  = property;
   }
 
-  public UnoPropertyNode(Property _aProperty)
+  public UnoPropertyNode(Property property)
   {
     super(null);
-    aProperty = _aProperty;
-    m_sPropertyName = aProperty.Name;
-    m_oUnoReturnObject = null;
-  }
-
-  public UnoPropertyNode(PropertyValue _aPropertyValue, Object _oUnoObject, Object _oUnoReturnObject)
-  {
-    super(_oUnoObject);
-    m_oUnoReturnObject = _oUnoReturnObject;
-    aPropertyValue = _aPropertyValue;
-    m_sPropertyName = aPropertyValue.Name;
-  }
-
-  public int getPropertyNodeType()
-  {
-    return m_nPropertyType;
-  }
-
-  public void setPropertyNodeType(int _nPropertyType)
-  {
-    m_nPropertyType = _nPropertyType;
+    this.property = property;
   }
 
   public String getPropertyName()
   {
-    return m_sPropertyName;
+    return this.property.Name;
   }
 
   public String getName()
   {
-    return this.m_sPropertyName;
+    return getPropertyName();
   }
 
   public String getClassName()
@@ -108,7 +83,7 @@ public class UnoPropertyNode extends UnoNode
         String[] sServiceNames = xServiceInfo.getSupportedServiceNames();
         for (int i = 0; i < sServiceNames.length; i++)
         {
-          if (doesServiceSupportProperty(sServiceNames[i], m_sPropertyName))
+          if (doesServiceSupportProperty(sServiceNames[i], property.Name))
           {
             sClassName = sServiceNames[i];
             break;
@@ -121,11 +96,6 @@ public class UnoPropertyNode extends UnoNode
       sClassName = "com.sun.star.beans.Property";
     }
     return sClassName;
-  }
-
-  public String getAnchor()
-  {
-    return m_sPropertyName;
   }
 
   protected boolean doesServiceSupportProperty(String _sServiceName, String _sPropertyName)
@@ -148,86 +118,9 @@ public class UnoPropertyNode extends UnoNode
     return false;
   }
 
-  public Object getUnoReturnObject()
-  {
-    return m_oUnoReturnObject;
-  }
-
-  private boolean isPrimitive()
-  {
-    boolean bIsPrimitive = true;
-    if (getUnoReturnObject() != null)
-    {
-      if (getProperty() != null)
-      {
-        bIsPrimitive = Introspector.isObjectPrimitive(getUnoReturnObject().getClass(), getProperty().Type.getTypeClass());
-      }
-      else
-      {
-        bIsPrimitive = Introspector.isObjectPrimitive(getUnoReturnObject().getClass());
-      }
-    }
-    else
-    {
-      bIsPrimitive = Introspector.isObjectPrimitive(aProperty.Type.getTypeClass());
-    }
-    return bIsPrimitive;
-  }
-
-  protected boolean isFoldable()
-  {
-    boolean bIsFoldable = false;
-    if (!isPrimitive())
-    {
-      String sTypeName = getUnoReturnObject().getClass().getName();
-      bIsFoldable = (!sTypeName.equals("com.sun.star.uno.Type"));
-    }
-    return bIsFoldable;
-  }
-
-  protected String getLabel()
-  {
-    if (!sLabel.equals(""))
-    {
-      if (!isPrimitive())
-      {
-        if (isFoldable())
-        {
-          sLabel = getPropertyTypeDescription(aProperty, getUnoReturnObject());
-        }
-        else
-        {
-          sLabel = getStandardPropertyDescription(aProperty, getUnoReturnObject());
-        }
-      }
-      else
-      {
-        sLabel = getStandardPropertyDescription(aProperty, getUnoReturnObject());
-      }
-    }
-    return sLabel;
-  }
-
   public Property getProperty()
   {
-    return aProperty;
-  }
-
-  protected static String getPropertyTypeDescription(Property _aProperty, Object _oUnoObject)
-  {
-    return _aProperty.Type.getTypeName() + " " + _aProperty.Name + " = " + _oUnoObject.toString();
-  }
-
-  public static String getStandardPropertyDescription(Property _aProperty, Object _objectElement)
-  {
-    if (!Introspector.isObjectPrimitive(_objectElement))
-    {
-      return _aProperty.Name + " = (" + _aProperty.Type.getTypeName() + ") ";
-    }
-    else
-    {
-      return _aProperty.Name + " (" + _aProperty.Type.getTypeName() + ") = " + getDisplayValueOfPrimitiveType(_objectElement);
-    }
+    return this.property;
   }
 
   public static String getStandardPropertyValueDescription(PropertyValue _aPropertyValue)

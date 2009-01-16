@@ -35,7 +35,6 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
-import com.sun.star.uno.Type;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -61,9 +60,9 @@ public class BasicCodeGenerator
   }
   
   @Override
-  public void addAccessorCodeFor(Object unoObject)
+  public void addAccessorCodeFor(String property)
   {
-    throw new UnsupportedOperationException("Not supported yet.");
+
   }
 
   @Override

@@ -198,7 +198,7 @@ public abstract class CodeGenerator
     }
   }
   
-  public abstract void addAccessorCodeFor(Object unoObject);
+  public abstract void addAccessorCodeFor(String property);
   public abstract void addInvokeCodeFor(XIdlMethod method);
   public abstract void addQueryCodeFor(String iface);
   

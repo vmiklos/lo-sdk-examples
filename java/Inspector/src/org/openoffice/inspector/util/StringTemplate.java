@@ -47,6 +47,8 @@ public class StringTemplate
   private String              str               = null;
   private String              templateDelimiter = "%";
   private Map<String, String> templateValues    = new HashMap<String, String>();
+  private String              templatedString   = null;
+  private boolean             updateRequired    = true;
   
   public StringTemplate(String str, String templateDelimiter)
   {
@@ -62,11 +64,13 @@ public class StringTemplate
   public void reset()
   {
     this.templateValues.clear();
+    this.updateRequired = true;
   }
   
   public void set(String template, String value)
   {
     this.templateValues.put(template, value);
+    this.updateRequired = true;
   }
   
   public void set(String template, long value)
@@ -87,14 +91,18 @@ public class StringTemplate
   @Override
   public String toString()
   {
-    String ret = new String(str);
-    
-    for(String key : this.templateValues.keySet())
+    if(this.updateRequired)
     {
-      String value = this.templateValues.get(key);
-      ret = ret.replace(templateDelimiter + key, value);
+      String ret = new String(str);
+
+      for(String key : this.templateValues.keySet())
+      {
+        String value = this.templateValues.get(key);
+        ret = ret.replace(templateDelimiter + key, value);
+      }
+      this.templatedString = ret;
+      this.updateRequired  = false;
     }
-    
-    return ret;
+    return this.templatedString;
   }
 }

@@ -3,7 +3,7 @@
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
  *  
- *  Copyright (c) 2003, 2009 by Sun Microsystems, Inc.
+ *  Copyright (c) 2009 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -35,46 +35,42 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
-import org.openoffice.inspector.util.Resource;
-import org.openoffice.inspector.util.StringTemplate;
 
-public class CPlusPlusCodeGenerator 
-  extends CodeGenerator
+/**
+ * CodeGenerator for Python source code.
+ * @author Christian Lins (cli@openoffice.org)
+ */
+public class PythonCodeGenerator extends CodeGenerator
 {
   
-  private StringTemplate tmplProgram = new StringTemplate(
-    Resource.getAsString("org/openoffice/inspector/codegen/template/CPlusPlusProgramStub.tmpl"));
-
-  protected CPlusPlusCodeGenerator()
-  {
-  }
-
-  public Language getLanguage()
-  {
-    return Language.CPlusPlus;
-  }
-  
-  public String getSourceCode()
-  {
-    return tmplProgram.toString();
-  }
-
   @Override
   public void addAccessorCodeFor(String property)
   {
-
+    
   }
-
+  
   @Override
   public void addInvokeCodeFor(XIdlMethod method)
   {
-
+    
   }
   
   @Override
   public void addQueryCodeFor(String iface)
   {
     
+  }
+  
+  @Override
+  public String getSourceCode()
+  {
+    return "";
+  }
+  
+  @Override
+  public Language getLanguage()
+  {
+    return Language.Python;
   }
   
 }

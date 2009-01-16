@@ -51,8 +51,8 @@ public class JavaCodeGenerator
   extends CodeGenerator 
 {
   
+  private Set<String> properties      = new HashSet<String>();
   private Set<String> queryInterfaces = new HashSet<String>();
-  
   private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
   
   private StringTemplate tmplInvoke = new StringTemplate(
@@ -61,6 +61,9 @@ public class JavaCodeGenerator
   private StringTemplate tmplProgram = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/JavaProgramStub.tmpl"));
 
+  private StringTemplate tmplProperty = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/JavaGetPropValue.tmpl"));
+  
   private StringTemplate tmplQueryInterface = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/JavaQueryInterface.tmpl"));
   
@@ -109,6 +112,15 @@ public class JavaCodeGenerator
       code.append('\n');
     }
     
+    // Get value from properties
+    for(String property : this.properties)
+    {
+      tmplProperty.set("propname", property);
+      
+      code.append(tmplProperty.toString());
+      code.append('\n');
+    }
+    
     tmplProgram.set("imports", imports.toString());
     tmplProgram.set("code", code.toString());
     
@@ -151,8 +163,12 @@ public class JavaCodeGenerator
   }
 
   @Override
-  public void addAccessorCodeFor(Object unoObject)
+  public void addAccessorCodeFor(String property)
   {
+    if(!this.properties.contains(property))
+      this.properties.add(property);
+      
+    // Force the code regeneration
     codeUpdateRequired = true;
     CodeUpdateEvent event = new CodeUpdateEvent(
       getSourceCode(), Language.Java, this.lastChangedLine);

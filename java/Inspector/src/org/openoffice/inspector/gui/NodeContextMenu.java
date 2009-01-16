@@ -116,8 +116,24 @@ public class NodeContextMenu
         }
         else if(swingNode instanceof SwingUnoPropertyNode)
         {
-          Object obj = ((UnoNode)((HideableMutableTreeNode)node.getRoot())
-            .getUserObject()).getUnoObject();
+          try
+          {
+            Object obj = ((UnoNode)((HideableMutableTreeNode)node.getRoot())
+              .getUserObject()).getUnoObject();
+            CodeGenerator[] codeGens = CodeGenerator.getInstances(obj);
+            for(CodeGenerator codeGen : codeGens)
+            {
+              if(codeGen != null)
+              {
+                codeGen.addAccessorCodeFor(
+                  ((SwingUnoPropertyNode)swingNode).getProperty().Name);
+              }
+            }
+          }
+          catch(Exception ex)
+          {
+            ex.printStackTrace();
+          }
         }
         else
         {
