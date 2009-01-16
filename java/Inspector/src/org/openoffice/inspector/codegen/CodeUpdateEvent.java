@@ -63,5 +63,10 @@ public class CodeUpdateEvent
   {
     return sourceCode;
   }
+  
+  public Language getLanguage()
+  {
+    return this.language;
+  }
 
 }

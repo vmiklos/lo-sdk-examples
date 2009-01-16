@@ -42,7 +42,7 @@ import javax.swing.JTabbedPane;
 import org.openoffice.inspector.Inspector;
 
 /**
- *
+ * Main frame of the Object Inspector.
  * @author Christian Lins (cli@openoffice.org)
  */
 public class InspectorFrame extends JFrame
@@ -58,6 +58,7 @@ public class InspectorFrame extends JFrame
   private XComponentContext xComponentContext;
   private Inspector._Inspector inspector;
   private JTabbedPane tabbedPane = new JTabbedPane();
+  private MenuBar     menuBar    = new MenuBar(this);
   
   public InspectorFrame(Inspector._Inspector inspector, String title)
   {
@@ -73,8 +74,13 @@ public class InspectorFrame extends JFrame
     
     getContentPane().add(this.tabbedPane, BorderLayout.CENTER);
     setDefaultCloseOperation(HIDE_ON_CLOSE);
-    setJMenuBar(new MenuBar(this));
+    setJMenuBar(this.menuBar);
     setSize(950, 750);
+  }
+  
+  protected MenuBar getTheMenuBar()
+  {
+    return this.menuBar;
   }
   
   public JTabbedPane getTabbedPane()

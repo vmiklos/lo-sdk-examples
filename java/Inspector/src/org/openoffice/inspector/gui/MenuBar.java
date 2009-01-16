@@ -49,18 +49,18 @@ import org.openoffice.inspector.model.SwingUnoNode;
 import org.openoffice.inspector.model.UnoTreeModel;
 
 /**
- *
+ * Menu bar of the InspectionFrame.
  * @author Christian Lins (cli@openoffice.org)
  */
-class MenuBar extends JMenuBar
+public class MenuBar extends JMenuBar
 {
   
-  private Language       currentLang = Language.Java;
-  private InspectorFrame frame;
-  private JMenu jMnuOptions = new JMenu("Options");
-  private JRadioButtonMenuItem jJavaMenuItem = null;
-  private JRadioButtonMenuItem jCPlusPlusMenuItem = null;
-  private JRadioButtonMenuItem jBasicMenuItem = null;
+  private Language             currentLang = Language.Java;
+  private InspectorFrame       frame;
+  private JMenu                mnuOptions          = new JMenu("Options");
+  private JRadioButtonMenuItem mnuOptionsJava      = null;
+  private JRadioButtonMenuItem mnuOptionsCPlusPlus = null;
+  private JRadioButtonMenuItem mnuOptionsBasic     = null;
   
   public MenuBar(InspectorFrame frame)
   {
@@ -228,16 +228,16 @@ class MenuBar extends JMenuBar
   private void addOptionsMenu(JMenuBar inspectMenuBar)
   {
     ButtonGroup oButtonGroup = new ButtonGroup();
-    jJavaMenuItem = addLanguageMenuItem(
+    this.mnuOptionsJava = addLanguageMenuItem(
       oButtonGroup, "Generate Java Sourcecode", true, 'J', Language.Java);
-    jMnuOptions.add(jJavaMenuItem);
-    jCPlusPlusMenuItem = addLanguageMenuItem(
+    this.mnuOptions.add(this.mnuOptionsJava);
+    this.mnuOptionsCPlusPlus = addLanguageMenuItem(
       oButtonGroup, "Generate C++ Sourcecode", false, 'C', Language.CPlusPlus);
-    jMnuOptions.add(jCPlusPlusMenuItem);
-    jBasicMenuItem = addLanguageMenuItem(
+    this.mnuOptions.add(this.mnuOptionsCPlusPlus);
+    this.mnuOptionsBasic = addLanguageMenuItem(
       oButtonGroup, "Generate OpenOffice.org Basic Sourcecode", false, 'B', Language.StarBasic);
-    jMnuOptions.add(jBasicMenuItem);
-    inspectMenuBar.add(jMnuOptions);
+    this.mnuOptions.add(this.mnuOptionsBasic);
+    inspectMenuBar.add(this.mnuOptions);
   }
   
   public Language getSelectedLanguage()

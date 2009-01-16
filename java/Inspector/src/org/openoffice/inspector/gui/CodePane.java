@@ -101,14 +101,18 @@ public class CodePane
    */
   public void codeUpdated(CodeUpdateEvent event)
   {
-    // Update code
-    setCode(event.getSourceCode());
-    
-    // Scroll to last changed line
-    int caret = 0;
-    while(caret < event.getFirstUpdatedLine() && caret >= 0)
-      caret = event.getSourceCode().indexOf("\n", caret + 1);
-    this.code.select(caret, 10);
+    if(InspectorFrame.getInstance().getTheMenuBar()
+        .getSelectedLanguage().equals(event.getLanguage()))
+    {
+      // Update code
+      setCode(event.getSourceCode());
+
+      // Scroll to last changed line
+      int caret = 0;
+      while(caret < event.getFirstUpdatedLine() && caret >= 0)
+        caret = event.getSourceCode().indexOf("\n", caret + 1);
+      this.code.select(caret, 10);
+    }
   }
   
   public String getCode()

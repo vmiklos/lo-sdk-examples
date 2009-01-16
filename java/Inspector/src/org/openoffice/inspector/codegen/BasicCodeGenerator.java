@@ -35,6 +35,8 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
+import java.util.HashSet;
+import java.util.Set;
 import org.openoffice.inspector.util.Resource;
 import org.openoffice.inspector.util.StringTemplate;
 
@@ -42,9 +44,16 @@ public class BasicCodeGenerator
   extends CodeGenerator
 {
 
+  private Set<String>     interfaces = new HashSet<String>();
+  private Set<String>     properties = new HashSet<String>();
+  private Set<XIdlMethod> methods    = new HashSet<XIdlMethod>();
+  
   private StringTemplate tmplProgram = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/BasicProgramStub.tmpl"));
 
+  private StringTemplate tmplProperty = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/BasicGetPropValue.tmpl"));
+  
   protected BasicCodeGenerator()
   {
   }
@@ -56,25 +65,98 @@ public class BasicCodeGenerator
   
   public String getSourceCode()
   {
+    StringBuffer code = new StringBuffer();
+    
+    // Loop over all interfaces, although there is now query necessary
+    // we should print out an informational message
+    for(String iface : this.interfaces)
+    {
+      code.append("REM You need not query for interface ");
+      code.append(iface);
+      code.append("\nREM Just call the method you want");
+    }
+    
+    // Loop over all methods
+    for(XIdlMethod method : this.methods)
+    {
+      code.append("  ");
+      code.append(generateMethodInvocationCode(method));
+      code.append('\n');
+    }
+    
+    // Loop over all property
+    for(String property : this.properties)
+    {
+      tmplProperty.set("propname", property);
+      code.append(tmplProperty.toString());
+    }
+    
+    tmplProgram.set("code", code.toString());
+    
     return tmplProgram.toString();
+  }
+  
+  private String generateMethodInvocationCode(XIdlMethod method)
+  {
+    StringBuffer buf = new StringBuffer();
+    int numParams = method.getParameterInfos().length;
+    
+    buf.append("retval");
+    buf.append(method.getName());
+    buf.append(" = doc.");
+    buf.append(method.getName());
+    buf.append("(");
+    
+    for(int n = 0; n < numParams; n++)
+    {
+      buf.append("param");
+      buf.append(n);
+      if(n + 1 < numParams)
+      {
+        buf.append(", ");
+      }
+    }
+    
+    buf.append(")");
+    
+    return buf.toString();
   }
   
   @Override
   public void addAccessorCodeFor(String property)
   {
-
+    if(!this.properties.contains(property))
+    {
+      this.properties.add(property);
+      fireCodeUpdateEvent();
+    }
   }
 
   @Override
   public void addInvokeCodeFor(XIdlMethod method)
   {
-
+    if(!this.methods.contains(method))
+    {
+      this.methods.add(method);
+      fireCodeUpdateEvent();     
+    }
   }
   
   @Override
   public void addQueryCodeFor(String iface)
   {
-    
+    if(!this.interfaces.contains(iface))
+    {
+      this.interfaces.add(iface);
+      fireCodeUpdateEvent();
+    }
+  }
+  
+  protected void fireCodeUpdateEvent()
+  {
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.StarBasic, 0);
+    super.fireCodeUpdateEvent(event); 
   }
 
 }

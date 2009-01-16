@@ -166,13 +166,10 @@ public class JavaCodeGenerator
   public void addAccessorCodeFor(String property)
   {
     if(!this.properties.contains(property))
+    {
       this.properties.add(property);
-      
-    // Force the code regeneration
-    codeUpdateRequired = true;
-    CodeUpdateEvent event = new CodeUpdateEvent(
-      getSourceCode(), Language.Java, this.lastChangedLine);
-    fireCodeUpdateEvent(event);
+      fireCodeUpdateEvent();
+    }
   }
 
   /**
@@ -191,22 +188,24 @@ public class JavaCodeGenerator
     addQueryCodeFor(XInvocation.class.getName());
     
     // Force the code regeneration and send update event
-    codeUpdateRequired = true;
-    CodeUpdateEvent event = new CodeUpdateEvent(
-      getSourceCode(), Language.Java, this.lastChangedLine);
-    fireCodeUpdateEvent(event);
+    fireCodeUpdateEvent();
   }
   
   @Override
   public void addQueryCodeFor(String iface)
   {
     if(!queryInterfaces.contains(iface))
+    {
       this.queryInterfaces.add(iface);
-
-    codeUpdateRequired = true;
-    CodeUpdateEvent event = new CodeUpdateEvent(
-      getSourceCode(), Language.Java, this.lastChangedLine);
-    fireCodeUpdateEvent(event);
+      fireCodeUpdateEvent();
+    }
   }
 
+  protected void fireCodeUpdateEvent()
+  {
+    this.codeUpdateRequired = true;
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.Java, this.lastChangedLine);
+    super.fireCodeUpdateEvent(event);
+  }
 }
