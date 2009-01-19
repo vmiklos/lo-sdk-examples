@@ -56,6 +56,7 @@ public abstract class CodeGenerator
     CodeGenerators.put(Language.CPlusPlus, CPlusPlusCodeGenerator.class);
     CodeGenerators.put(Language.Java, JavaCodeGenerator.class);
     CodeGenerators.put(Language.StarBasic, BasicCodeGenerator.class);
+    CodeGenerators.put(Language.Python, PythonCodeGenerator.class);
   }
     
   /**

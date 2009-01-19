@@ -61,6 +61,7 @@ public class MenuBar extends JMenuBar
   private JRadioButtonMenuItem mnuOptionsJava      = null;
   private JRadioButtonMenuItem mnuOptionsCPlusPlus = null;
   private JRadioButtonMenuItem mnuOptionsBasic     = null;
+  private JRadioButtonMenuItem mnuOptionsPython    = null;
   
   public MenuBar(InspectorFrame frame)
   {
@@ -76,33 +77,33 @@ public class MenuBar extends JMenuBar
     addHelpMenu(this);
   }
   
-  private void addHelpMenu(JMenuBar _jInspectMenuBar)
+  private void addHelpMenu(JMenuBar inspectMenuBar)
   {
-    JMenu jMnuHelp = new JMenu("Help");
-    jMnuHelp.add(getHelpMenuItem("Idl-Help"));
-    _jInspectMenuBar.add(jMnuHelp);
+    JMenu mnuHelp = new JMenu("Help");
+    mnuHelp.add(getHelpMenuItem("Idl-Help"));
+    inspectMenuBar.add(mnuHelp);
   }
     
-  private JMenuItem getHelpMenuItem(String _sMenuTitle)
+  private JMenuItem getHelpMenuItem(String menuTitle)
   {
-    JMenuItem jMnuHelpItem = new JMenuItem(_sMenuTitle);
-    jMnuHelpItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-    jMnuHelpItem.setMnemonic('H');
-    jMnuHelpItem.addActionListener(new ActionListener()
+    JMenuItem mnuHelpItem = new JMenuItem(menuTitle);
+    mnuHelpItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+    mnuHelpItem.setMnemonic('H');
+    mnuHelpItem.addActionListener(new ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         //m_oInspector.openIdlFileforSelectedNode();
       }
     });
-    return jMnuHelpItem;
+    return mnuHelpItem;
   }
   
-  private void addFileMenu(JMenuBar _jInspectMenuBar)
+  private void addFileMenu(JMenuBar inspectMenuBar)
   {
-    JMenu jMnuFile = new JMenu("File");
-    JMenuItem jMnuItemRemoveInspector = new JMenuItem("Close tab");
-    jMnuItemRemoveInspector.addActionListener(new ActionListener()
+    JMenu mnuFile = new JMenu("File");
+    JMenuItem mnuItemRemoveInspector = new JMenuItem("Close tab");
+    mnuItemRemoveInspector.addActionListener(new ActionListener()
     {
 
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -110,10 +111,10 @@ public class MenuBar extends JMenuBar
         frame.removeSelectedTabPane();
       }
     });
-    jMnuFile.add(jMnuItemRemoveInspector);
-    jMnuFile.addSeparator();
-    JMenuItem jMnuItemExit = new JMenuItem("Exit");
-    jMnuItemExit.addActionListener(new ActionListener()
+    mnuFile.add(mnuItemRemoveInspector);
+    mnuFile.addSeparator();
+    JMenuItem mnuItemExit = new JMenuItem("Exit");
+    mnuItemExit.addActionListener(new ActionListener()
     {
 
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -121,26 +122,25 @@ public class MenuBar extends JMenuBar
         frame.setVisible(false);
       }
     });
-    jMnuFile.add(jMnuItemExit);
-    _jInspectMenuBar.add(jMnuFile);
+    mnuFile.add(mnuItemExit);
+    inspectMenuBar.add(mnuFile);
   }
     
-  private void addInspectMenu(JMenuBar _jInspectMenuBar)
+  private void addInspectMenu(JMenuBar inspectMenuBar)
   {
-    JMenu jMnuInspect = new JMenu("Inspect");
-    addApplicationDocumentMenu(jMnuInspect);
-    jMnuInspect.addSeparator();
-    addGlobalServiceManagerMenu(jMnuInspect);
-    jMnuInspect.addSeparator();
-    addOpenDocumentMenu(jMnuInspect);
-    _jInspectMenuBar.add(jMnuInspect);
+    JMenu mnuInspect = new JMenu("Inspect");
+    addApplicationDocumentMenu(mnuInspect);
+    mnuInspect.addSeparator();
+    addGlobalServiceManagerMenu(mnuInspect);
+    mnuInspect.addSeparator();
+    addOpenDocumentMenu(mnuInspect);
+    inspectMenuBar.add(mnuInspect);
   }
   
   private void addOpenDocumentMenu(JMenu menu)
   {
     ActionListener oActionListener = new ActionListener()
     {
-
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         String sTDocUrl = evt.getActionCommand();
@@ -158,10 +158,10 @@ public class MenuBar extends JMenuBar
     }
   }
   
-  private void addGlobalServiceManagerMenu(JMenu _jMnuRoot)
+  private void addGlobalServiceManagerMenu(JMenu mnuRoot)
   {
-    JMenuItem jMnuGlobalServiceManager = new JMenuItem("Global Service Manager");
-    jMnuGlobalServiceManager.addActionListener(new ActionListener()
+    JMenuItem mnuGlobalServiceManager = new JMenuItem("Global Service Manager");
+    mnuGlobalServiceManager.addActionListener(new ActionListener()
     {
 
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -171,18 +171,17 @@ public class MenuBar extends JMenuBar
           "Global ServiceManager");
       }
     });
-    _jMnuRoot.add(jMnuGlobalServiceManager);
+    mnuRoot.add(mnuGlobalServiceManager);
   }
   
   private void addApplicationDocumentMenu(JMenu menu)
   {
     ActionListener oActionListener = new ActionListener()
     {
-
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
-        String sApplicationDocUrl = evt.getActionCommand();
-        Inspector.getInstance().inspectOpenEmptyDocument(sApplicationDocUrl);
+        String applicationDocUrl = evt.getActionCommand();
+        Inspector.getInstance().inspectOpenEmptyDocument(applicationDocUrl);
       }
     };
     String[][] sApplUrls = Inspector.getInstance().getApplicationUrls();
@@ -203,7 +202,6 @@ public class MenuBar extends JMenuBar
     group.add(item);
     item.addActionListener(new ActionListener()
     {
-
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
         try
@@ -237,6 +235,9 @@ public class MenuBar extends JMenuBar
     this.mnuOptionsBasic = addLanguageMenuItem(
       oButtonGroup, "Generate OpenOffice.org Basic Sourcecode", false, 'B', Language.StarBasic);
     this.mnuOptions.add(this.mnuOptionsBasic);
+    this.mnuOptionsPython = addLanguageMenuItem(
+      oButtonGroup, "Generate Python Sourcecode", false, 'P', Language.Python);
+    this.mnuOptions.add(this.mnuOptionsPython);
     inspectMenuBar.add(this.mnuOptions);
   }
   

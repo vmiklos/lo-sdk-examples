@@ -35,6 +35,12 @@
 package org.openoffice.inspector.codegen;
 
 import com.sun.star.reflection.XIdlMethod;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.openoffice.inspector.util.Resource;
+import org.openoffice.inspector.util.StringTemplate;
 
 /**
  * CodeGenerator for Python source code.
@@ -42,29 +48,39 @@ import com.sun.star.reflection.XIdlMethod;
  */
 public class PythonCodeGenerator extends CodeGenerator
 {
+ 
+  private Set<String> properties      = new HashSet<String>();
+  private Set<String> queryInterfaces = new HashSet<String>();
+  private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
+  
+  private StringTemplate tmplProgram = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/PythonProgramStub.tmpl"));
   
   @Override
   public void addAccessorCodeFor(String property)
   {
-    
+    if(!this.properties.contains(property))
+      this.properties.add(property);
   }
   
   @Override
   public void addInvokeCodeFor(XIdlMethod method)
   {
-    
+    if(!this.invokeMethods.contains(method))
+      this.invokeMethods.add(method);
   }
   
   @Override
   public void addQueryCodeFor(String iface)
   {
-    
+    if(!this.queryInterfaces.contains(iface))
+      this.queryInterfaces.add(iface);
   }
   
   @Override
   public String getSourceCode()
   {
-    return "";
+    return this.tmplProgram.toString();
   }
   
   @Override

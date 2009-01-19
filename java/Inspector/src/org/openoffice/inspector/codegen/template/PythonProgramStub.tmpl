@@ -2,4 +2,18 @@
 # OpenOffice.org Object Inspector.
 # See http://api.openoffice.org/ for more information.
 
+import uno
+%imports
+
+# Get the uno component context from the PyUNO runtime
+local = uno.getComponentContext()
+
+# create the UnoUrlResolver
+resolver = localContext.ServiceManager.createInstanceWithContext(
+				"com.sun.star.bridge.UnoUrlResolver", local)
+
+# Connect to the running office and retrieve the ComponentContext
+context = resolver.resolve(
+  "uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
+
 %code
