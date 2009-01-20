@@ -72,7 +72,7 @@ public class InspectorPane
     setLayout(new BorderLayout());
     JSplitPane splitPane = new JSplitPane(
       JSplitPane.VERTICAL_SPLIT,
-      new JScrollPane(tree), new JScrollPane(this.codePane));
+      new JScrollPane(tree), this.codePane);
     add(splitPane, BorderLayout.CENTER);
     add(this.filterPane, BorderLayout.NORTH);
   }

@@ -42,9 +42,11 @@ import javax.swing.JScrollPane;
 import javax.swing.text.DefaultEditorKit;
 import jsyntaxpane.DefaultSyntaxKit;
 import jsyntaxpane.syntaxkits.JavaSyntaxKit;
+import jsyntaxpane.syntaxkits.PythonSyntaxKit;
 import org.openoffice.inspector.codegen.CodeGenerator;
 import org.openoffice.inspector.codegen.CodeUpdateEvent;
 import org.openoffice.inspector.codegen.CodeUpdateListener;
+import org.openoffice.inspector.codegen.Language;
 import org.openoffice.inspector.model.UnoTreeModel;
 
 /**
@@ -101,8 +103,19 @@ public class CodePane
    */
   public void codeUpdated(CodeUpdateEvent event)
   {
-    if(InspectorFrame.getInstance().getTheMenuBar()
-        .getSelectedLanguage().equals(event.getLanguage()))
+    Language selectedLanguage = InspectorFrame.getInstance().getTheMenuBar()
+        .getSelectedLanguage();
+    
+    if(selectedLanguage.equals(Language.Java))
+    {
+      //this.code.setEditorKit(new JavaSyntaxKit());
+    }
+    else if(selectedLanguage.equals(Language.Python))
+    {
+      //this.code.setEditorKit(new PythonSyntaxKit());
+    }
+    
+    if(selectedLanguage.equals(event.getLanguage()))
     {
       // Update code
       setCode(event.getSourceCode());

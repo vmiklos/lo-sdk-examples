@@ -50,36 +50,81 @@ public class PythonCodeGenerator extends CodeGenerator
 {
  
   private Set<String> properties      = new HashSet<String>();
-  private Set<String> queryInterfaces = new HashSet<String>();
   private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
   
   private StringTemplate tmplProgram = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/PythonProgramStub.tmpl"));
   
+  private StringTemplate tmplInvoke = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/PythonInvoke.tmpl"));
+  
+  private StringTemplate tmplProperty = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/PythonGetPropValue.tmpl"));
+  
   @Override
   public void addAccessorCodeFor(String property)
   {
     if(!this.properties.contains(property))
+    {
       this.properties.add(property);
+      fireCodeUpdateEvent();
+    }
   }
   
   @Override
   public void addInvokeCodeFor(XIdlMethod method)
   {
     if(!this.invokeMethods.contains(method))
+    {
       this.invokeMethods.add(method);
+      fireCodeUpdateEvent();
+    }
   }
   
   @Override
   public void addQueryCodeFor(String iface)
   {
-    if(!this.queryInterfaces.contains(iface))
-      this.queryInterfaces.add(iface);
+    // There is no need to query interfaces in Python
   }
   
   @Override
   public String getSourceCode()
   {
+    StringBuffer code = new StringBuffer();
+    
+    // Generate code for all properties
+    for(String property : this.properties)
+    {
+      this.tmplProperty.set("propname", property);
+      
+      code.append(this.tmplProperty.toString());
+      code.append('\n');
+    }
+    
+    // Generate invocation code for all methods
+    for(XIdlMethod method : this.invokeMethods)
+    {
+      this.tmplInvoke.set("methodname", method.getName());
+      
+      StringBuffer buf      = new StringBuffer();
+      int          numParam = method.getParameterInfos().length;
+      for(int n = 0; n < numParam; n++)
+      {
+        buf.append("param");
+        buf.append(n);
+        if(n + 1 < numParam)
+        {
+          buf.append(", ");
+        }
+      }
+      this.tmplInvoke.set("paramlist", buf.toString());
+      
+      code.append(this.tmplInvoke.toString());
+      code.append('\n');
+    }
+    
+    tmplProgram.set("imports", "");
+    tmplProgram.set("code", code.toString());
     return this.tmplProgram.toString();
   }
   
@@ -87,6 +132,13 @@ public class PythonCodeGenerator extends CodeGenerator
   public Language getLanguage()
   {
     return Language.Python;
+  }
+  
+  protected void fireCodeUpdateEvent()
+  {
+    CodeUpdateEvent event = new CodeUpdateEvent(
+      getSourceCode(), Language.Python, 0);
+    super.fireCodeUpdateEvent(event);
   }
   
 }
