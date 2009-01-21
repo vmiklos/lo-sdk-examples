@@ -1,0 +1,4 @@
+xIntrospection = Reference< XIntrospection >( xServiceManager->createInstance( 
+                                OUString( RTL_CONSTASCII_USTRINGPARAM( 
+                                "com.sun.star.beans.Introspection" ))), UNO_QUERY );
+Sequence< Property > Properties = xIntrospection->getProperties(PropertyConcept::ALL);

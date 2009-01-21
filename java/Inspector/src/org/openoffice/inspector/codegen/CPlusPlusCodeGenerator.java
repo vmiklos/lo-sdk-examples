@@ -45,14 +45,17 @@ import org.openoffice.inspector.util.StringTemplate;
 public class CPlusPlusCodeGenerator 
   extends CodeGenerator
 {
-  
+
   private Set<String> properties      = new HashSet<String>();
   private Set<String> queryInterfaces = new HashSet<String>();
   private List<XIdlMethod> invokeMethods = new ArrayList<XIdlMethod>();
   
   private StringTemplate tmplProgram = new StringTemplate(
-    Resource.getAsString("org/openoffice/inspector/codegen/template/CPlusPlusProgramStub.tmpl"));
+    Resource.getAsString("org/openoffice/inspector/codegen/template/CPPProgramStub.tmpl"));
 
+  private StringTemplate tmplQueryInterface = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/CPPQueryInterface.tmpl"));
+  
   protected CPlusPlusCodeGenerator()
   {
   }
@@ -64,6 +67,41 @@ public class CPlusPlusCodeGenerator
   
   public String getSourceCode()
   {
+    StringBuffer includes = new StringBuffer();
+    StringBuffer code     = new StringBuffer();
+    
+    // Query all interfaces
+    for(String iface : this.queryInterfaces)
+    {
+      // Add include directive for the interface
+      String include = iface.replace('.', '/');
+      includes.append("#include <");
+      includes.append(include);
+      includes.append(".hpp>\n");
+      
+      // iface is the name of the Java interface name
+      // We only need the last part of xx.yy.zz.Name
+      iface = iface.substring(iface.lastIndexOf(".") + 1);
+      this.tmplQueryInterface.set("iface", iface);
+      
+      code.append(this.tmplQueryInterface.toString());
+      code.append('\n');
+    }
+    
+    // Access all properties
+    for(String property : this.properties)
+    {
+      
+    }
+    
+    // Invoke all methods
+    for(XIdlMethod method : this.invokeMethods)
+    {
+      
+    }
+    
+    this.tmplProgram.set("includes", includes.toString());
+    this.tmplProgram.set("code", code.toString());
     return tmplProgram.toString();
   }
 
@@ -89,8 +127,8 @@ public class CPlusPlusCodeGenerator
   
   @Override
   public void addQueryCodeFor(String iface)
-  {
-    if(this.queryInterfaces.contains(iface))
+  {    
+    if(!this.queryInterfaces.contains(iface))
     {
       this.queryInterfaces.add(iface);
       fireCodeUpdateEvent();
@@ -100,7 +138,7 @@ public class CPlusPlusCodeGenerator
   protected void fireCodeUpdateEvent()
   {
     CodeUpdateEvent event = new CodeUpdateEvent(
-      getSourceCode(), Language.Java, 0);
+      getSourceCode(), Language.CPlusPlus, 0);
     super.fireCodeUpdateEvent(event);
   }
   
