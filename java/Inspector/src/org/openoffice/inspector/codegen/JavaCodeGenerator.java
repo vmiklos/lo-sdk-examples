@@ -78,6 +78,9 @@ public class JavaCodeGenerator
   {
   }
 
+  /**
+   * Generates and returns the Java source code.
+   */
   public String getSourceCode()
   {
     if(!codeUpdateRequired)
@@ -214,4 +217,5 @@ public class JavaCodeGenerator
       getSourceCode(), Language.Java, this.lastChangedLine);
     super.fireCodeUpdateEvent(event);
   }
+
 }
