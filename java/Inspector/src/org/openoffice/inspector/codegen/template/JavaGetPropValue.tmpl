@@ -1,5 +1,4 @@
 
-    XIntrospectionAccess xIntrospectionAccess = xIntrospection.inspect(xContext);
     Property prop%propname = xIntrospectionAccess.getProperty("%propname",
       com.sun.star.beans.PropertyConcept.ALL); 
-    Object   val%propname  = xPropertySet.getPropertyValue(prop.Name);
+    Object   val%propname  = xPropertySet.getPropertyValue(prop%propname.Name);

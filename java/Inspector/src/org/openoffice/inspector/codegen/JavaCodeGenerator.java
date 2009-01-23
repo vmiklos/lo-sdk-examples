@@ -34,6 +34,8 @@
 
 package org.openoffice.inspector.codegen;
 
+import com.sun.star.beans.XIntrospectionAccess;
+import com.sun.star.beans.XPropertySet;
 import com.sun.star.reflection.XIdlMethod;
 import com.sun.star.script.XInvocation;
 import java.util.ArrayList;
@@ -113,6 +115,10 @@ public class JavaCodeGenerator
     }
     
     // Get value from properties
+    if(this.properties.size() > 0)
+    {
+      imports.append("import com.sun.star.beans.Property;\n");
+    }
     for(String property : this.properties)
     {
       tmplProperty.set("propname", property);
@@ -156,10 +162,6 @@ public class JavaCodeGenerator
   protected void setRootObject(Object obj)
   {
     super.setRootObject(obj);
-    
-    // What do we need here?
-    //if(!this.queryInterfaces.contains(obj.getClass()))
-    //  this.queryInterfaces.add(obj.getClass().getName());
   }
 
   @Override
@@ -168,6 +170,10 @@ public class JavaCodeGenerator
     if(!this.properties.contains(property))
     {
       this.properties.add(property);
+      
+      // We need interfaces to access the properties
+      addQueryCodeFor(XIntrospectionAccess.class.getName());
+      addQueryCodeFor(XPropertySet.class.getName());
       fireCodeUpdateEvent();
     }
   }

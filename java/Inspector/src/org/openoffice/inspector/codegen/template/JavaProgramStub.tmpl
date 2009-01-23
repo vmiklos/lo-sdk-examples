@@ -2,15 +2,20 @@
  * This sample program was automatically created by the
  * OpenOffice.org Object Inspector extension.
  * See http://api.openoffice.org/ for more information.
+ *
+ * You have to add the following JAR-files to your classpath:
+ * - juh.jar (on *nix: /opt/openoffice.org/ure/share/java/juh.jar)
+ * - unoil.jar (on *nix: /opt/openoffice.org/basis3.1/program/classes/unoil.jar)
  */
 
 import com.sun.star.comp.helper.Bootstrap;
 import com.sun.star.comp.helper.BootstrapException;
 import com.sun.star.lang.XSingleComponentFactory;
 import com.sun.star.uno.UnoRuntime;
-import com.sun.star.uno.XComponentContext
+import com.sun.star.uno.XComponentContext;
 import com.sun.star.text.XTextDocument;
 import com.sun.star.frame.XModel;
+import javax.swing.JOptionPane;
 %imports
 
 public class SampleProgram
@@ -19,14 +24,13 @@ public class SampleProgram
   public static void main(String[] args)
   {
     XComponentContext xContext  = bootstrap();
-    XModel            xDocModel = xContext.getDocument();
    
     %code
   }
 
   private static XComponentContext bootstrap()
   {
-    xContext = null;
+    XComponentContext xContext = null;
     try
     {
       // Get the remote office component context

@@ -2,4 +2,6 @@
     Object[] param%methodname     = %inoutparams; 
     Object   invResult%methodname = xInvocation.invoke(
       "%methodname",
-      param%methodname);
+      param%methodname,
+      inoutIndices%methodname,
+      inoutParams%methodname);
