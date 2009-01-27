@@ -1,8 +1,24 @@
 
-    Object[] inoutParams%methodname     = %inoutparams;
-    short[]  inoutIndices%methodname    = %inoutindices;P
-    Object   invResult%methodname = xInvocation.invoke(
-      "%methodname",
-      param%methodname,
-      inoutIndices%methodname,
-      inoutParams%methodname);
+    try
+    {
+      Object[]   param%methodname           = %params;
+      Object[][] inoutParams%methodname     = %inoutparams;
+      short[][]  inoutIndices%methodname    = %inoutindices;
+      Object   invResult%methodname = xInvocation.invoke(
+        "%methodname",
+        param%methodname,
+        inoutIndices%methodname,
+        inoutParams%methodname);
+    }
+    catch(com.sun.star.lang.IllegalArgumentException ex)
+    {
+      ex.printStackTrace();
+    }
+    catch(com.sun.star.script.CannotConvertException ex)
+    {
+      ex.printStackTrace();
+    }
+    catch(com.sun.star.reflection.InvocationTargetException ex)
+    {
+      ex.printStackTrace();
+    }

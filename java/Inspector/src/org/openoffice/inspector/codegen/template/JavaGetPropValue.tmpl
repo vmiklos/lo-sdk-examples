@@ -1,4 +1,19 @@
 
-    Property prop%propname = xIntrospectionAccess.getProperty("%propname",
-      com.sun.star.beans.PropertyConcept.ALL); 
-    Object   val%propname  = xPropertySet.getPropertyValue(prop%propname.Name);
+    try
+    {
+      Property prop%propname = xIntrospectionAccess.getProperty("%propname",
+        com.sun.star.beans.PropertyConcept.ALL); 
+      Object   val%propname  = xPropertySet.getPropertyValue(prop%propname.Name);
+    }
+    catch(NoSuchElementException ex)
+    {
+      System.err.println("Object has no such element: %propname");
+    }
+    catch(UnknownPropertyException ex)
+    {
+      System.err.println("Property %propname is unknown!");
+    }
+    catch(com.sun.star.lang.WrappedTargetException ex)
+    {
+      ex.printStackTrace();
+    }

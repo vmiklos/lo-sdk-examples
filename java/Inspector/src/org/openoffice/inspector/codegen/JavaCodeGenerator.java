@@ -111,7 +111,9 @@ public class JavaCodeGenerator
     for(XIdlMethod method : this.invokeMethods)
     {
       tmplInvoke.set("methodname", method.getName());
-      tmplInvoke.set("inoutparams", generateInOutParamsFor(method));
+      tmplInvoke.set("inoutparams", generateArrayFor(method, "Object"));
+      tmplInvoke.set("inoutindices", generateArrayFor(method, "short"));
+      tmplInvoke.set("params", generateArrayFor(method, "Object"));
 
       code.append(tmplInvoke.toString());
       code.append('\n');
@@ -145,11 +147,11 @@ public class JavaCodeGenerator
    * @param method
    * @return
    */
-  private String generateInOutParamsFor(XIdlMethod method)
+  private String generateArrayFor(XIdlMethod method, String typeStr)
   {
     StringBuffer buf = new StringBuffer();
     
-    buf.append("new Object[1][");
+    buf.append("new " + typeStr + "[1][");
     buf.append(method.getParameterInfos().length);
     buf.append("]");
     
