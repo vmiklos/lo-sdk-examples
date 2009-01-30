@@ -126,6 +126,7 @@ public class CodeFileChooser extends JFileChooser
         cff = new JavaFileFilter();
         addChoosableFileFilter(cff);
         setFileFilter(cff);
+        setSelectedFile(new File("SampleProgram.java"));
         break;
       }
       case CPlusPlus:
@@ -133,6 +134,7 @@ public class CodeFileChooser extends JFileChooser
         cff = new CPlusPlusFileFilter();
         addChoosableFileFilter(cff);
         setFileFilter(cff);
+        setSelectedFile(new File("sample.cxx"));
         break;
       }
       case Python:
@@ -140,6 +142,7 @@ public class CodeFileChooser extends JFileChooser
         cff = new PythonFileFilter();
         addChoosableFileFilter(cff);
         setFileFilter(cff);
+        setSelectedFile(new File("sample.py"));
         break;
       }
       case StarBasic:
@@ -147,6 +150,7 @@ public class CodeFileChooser extends JFileChooser
         cff = new BasicFileFilter();
         addChoosableFileFilter(cff);
         setFileFilter(cff);
+        setSelectedFile(new File("sample.bas"));
         break;
       }
     }
@@ -170,4 +174,5 @@ public class CodeFileChooser extends JFileChooser
     else
       return super.getSelectedFile();
   }
+
 }

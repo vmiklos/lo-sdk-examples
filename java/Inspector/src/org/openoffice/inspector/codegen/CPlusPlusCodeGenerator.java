@@ -56,6 +56,12 @@ public class CPlusPlusCodeGenerator
   private StringTemplate tmplQueryInterface = new StringTemplate(
     Resource.getAsString("org/openoffice/inspector/codegen/template/CPPQueryInterface.tmpl"));
   
+  private StringTemplate tmplInvoke = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/CPPInvoke.tmpl"));
+  
+  private StringTemplate tmplProperty = new StringTemplate(
+    Resource.getAsString("org/openoffice/inspector/codegen/template/CPPGetPropValue.tmpl"));
+  
   protected CPlusPlusCodeGenerator()
   {
   }
@@ -91,13 +97,19 @@ public class CPlusPlusCodeGenerator
     // Access all properties
     for(String property : this.properties)
     {
+      this.tmplProperty.set("propname", property);
       
+      code.append(this.tmplProperty.toString());
+      code.append('\n');
     }
     
     // Invoke all methods
     for(XIdlMethod method : this.invokeMethods)
     {
+      this.tmplInvoke.set("methodname", method.getName());
       
+      code.append(this.tmplInvoke.toString());
+      code.append('\n');
     }
     
     this.tmplProgram.set("includes", includes.toString());
@@ -120,6 +132,7 @@ public class CPlusPlusCodeGenerator
   {
     if(!this.invokeMethods.contains(method))
     {
+      addQueryCodeFor("com.sun.star.script.XInvocation");
       this.invokeMethods.add(method);
       fireCodeUpdateEvent();
     }
